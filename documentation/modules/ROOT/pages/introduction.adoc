@@ -1,4 +1,4 @@
-= Introduction
+= はじめに
 :imagesdir: ../assets/images
 
 == Globex's Digital Transformation Journey
