@@ -7,131 +7,93 @@ Now that the OpenAPI specs are finalised, creation of API mocks will enable para
 * The various  dev teams (such as mobile dev) do not need to wait for the APIs to be completely developed and instead can use these mocks to get realistic responses. 
 * Backend developers in parallel build the backend applications APIs using modern cloud-native frameworks such as https://quarkus.io/[Quarkus^, window=product-page]. 
 
-There are a number of ways to mock APIs including microcks, postman etc. In this labs you will use hosted Postman.
+There are a number of ways to mock APIs including microcks, postman etc. In this module, you will use Microcks which has been deployed on OpenShift already.
 
 == Goals of this lab
-* Setup Postman as a tool to mock the APIs using the OpenAPI schema
-* Import one of the APIs 
+* Import the Product Catalog API from Service Registry 
 * Test the imported API using the mock server and look for the change made to one of the examples in the API Designer
-
-== Setup Postman
-. Access Postman at link:https://www.postman.com/[postman^, window=postman]. Click on *Sign Up for Free*.
-. You can now either create a new user or sign-up with Google. 
-+
-image::postman-signup.png[]
- 
-. You can provide your name and other details after signing in if prompted. You may choose the `Skip for now` button.
-. You will be prompted with a welcome screen asking   *How would you like to start?*  if this is the first time you are logging in. You can ignore this prompt by using the `_<esc>_` key on your keyboard.
-
-. From the top navbar you can choose an alternate Workspace or choose to create a new one or you may remain in your current workspace.
-+
-image::choose-workspace.png[]
 
 
 == Import the Product Catalog API
 
-. Click on the *Import* button as show in the screenshot below
+[NOTE]
+
+Microcks has been set up in dev-mode within OpenShift globex-apim-%USERID% namespace. 
+
+
+. Launch https://microcks-globex-apim-%USERID%.%SUBDOMAIN%/[microcks^] 
 +
-image::import-button-workspace.png[]
-
-. You will be presented with an import wizard popup
-+
-image:postman-drag-file.png[width=60%]
-
-
-
-. The next step is to import the OpenAPI spec from Service Registry.  Navigate to the https://console.redhat.com/beta/application-services/service-registry[Service Registry^,window=service-registry]. Login with your Red Hat account if necessary.
-. Navigate to the `globex` instance and from there to `globex / ProductCatalogAPI`. 
-. You can retrieve OpenAPI spec through one of the following options and proceed to import the spec into Postman either as *Raw Text* or as *File import*. Both of these options are describe below. +
-
-.*Option 1: Import OpenAPI spec as raw text*
-[%collapsible]
+[NOTE]
 ====
-* In the Service Registry browser tab, click on the *Content* tab. Copy the specifications content shown in this page into the memory (`Ctrl-A` and `Ctrl-C`).
-+
-image::osr-view-content.png[]
-
-* Navigate to the Postman window browser tab which is already open.
-
-* Paste the copied content into the popup in the field as indicated below
-+
-image::postman-paste-text.png[width=60%] 
-
-* You will be auto navigated to the next step.
+Microcks has been setup in developer-mode without authentication only for the purpose of this workshop. You can access the deployment from the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console]. If required, login with your username and password (`%USERID%/openshift`). 
 ====
-
-
-.*Option 2: Import OpenAPI spec as file*
-[%collapsible]
+. Click on the *Importers* button as show in the screenshot below
++
+image::mic-landing.png[]
+. You will be presented with the *Import Jobs* page. Click *+Create* button.
++
+image:mic-create.png[] 
+. In the *Create a new Job* wizard - *Step 1: Importer Job properties*, fill in the following details as shown in the screenshot below, and click *Next>* button. +
+* *Name*: 
++
+[.console-input]
+[source,yaml]
+----
+Product Catalog
+----
+* *Repository URL*: 
++
+[.console-input]
+[source,yaml]
+----
+https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI
+----
++
+image:mic-create-job.png[] 
++
+[NOTE]
 ====
-* In the Service Registry browser tab, click on the *Documentation* tab. Click on the *Download* button. Make a note of where the file is downloaded on your laptop.
-+
-image::osr-documentation-download.png[]
-
-
-* Navigate back to the Postman window browser tab where you have the *Import* wizard open.
-
-* You can either drag the file into this window or the `select files or folders` options to import the file downloaded from Service Registry
-+
-image:postman-drag-file.png[width=60%]
-
-* You will be auto-navigated to the next step.
+The Repository URL that you provided is the OpenAPI Schema's URL from Service Registry that you setup in the previous step. 
 ====
-
-[start=6]
-. Once you have successfully imported the OpenAPI specification, you will next be asked to *Choose how to import your API*. 
-. Choose the `OpenAPI 3.0 with a Postman Collection` option, and then choose to  *View Import Settings* link as highlighted below
-
+. Since there is no Authentication secret to be provided, click *Next >* in *Step 2 - Authentication options*
 +
-image::postman-how-to-import-api.png[width=60%]
-
-
-. Within the `Import Settings` wizard, for the *Parameter generation* dropdown  choose the value as `Example`. Click on the <- button to go back to the previous section
+image:mic-create-job-step2.png[] 
+. You can choose to provide a label in the *Labels* step. But since this is not mandatory or relevant to this exercise, you can simply choose to click *Next >* in the *Step 3 - Labels*
+image:mic-create-job-step3.png[] 
+. Click *Create* in the *Step 4 - Review* step of this wizard 
+image:mic-create-job-step4.png[] 
+. You would be able to view the Product Catalog API that you imported being listed as shown below. Take special note of the labels as highlighted. If you see an *Error* label, refer to the note shown below
 +
-image::postman-import-settings.png[width=60%]
-
-
-. Click on *Import*. 
+image:mic-import-success.png[] 
 +
-image::postman-import-api.png[width=60%]
-
-. You will be notified that import is complete.
+[CAUTION]
+====
+image:mic-import-error.png[] 
+If there is an error in fetching the content, this could mean that you had provided a different name to the schema within Service Registry other than *ProductCatalogAPI*
+====
+. Navigate to the *APIs | Services* to view the API that has been successfully imported. Click on *Product Catalog API* link (highlighted in the screenshot below)
 +
-image::postman-import-complete.png[width=60%]
-
-. Explore the `Product Catalog API` that has been imported that can be viewed under "Collections" section on the left hand navigation
-. Note that the *Collections* and *APIs* sections are prepopulated
-
-== Setup Postman mock server
-. The next step is to setup a mock server on Postman which will then showcase how it can be useful for developers while the actual API backend is still under developement.
-. Click on *Mock Servers* on the left-hand navigation, and choose the *Create Mock Server* option.
+image:mic-view-api.png[] 
+. View the details of the imported Product Catalog
+. Click on the arrow *>* against the first operation *GET /services/product/list/{ids}* to view the details of this operation. 
+** You may note that this operation holds the example that you had edited to include your name :)
 +
-image::postman-mock-landing.png[]
-. On the right pane, choose *Select an existing collection*, and then choose `ProductCatalogAPI`
+image:mic-view-api-details.png[] 
+. You will now be able to see the Mock URL, the response code and other details for this specific operation
+. Copy the Mock URL by clicking on the *Copy icon* shown in the Mock tab named *product-list-with-inventory*. Refer to the screenshot below.
 +
-image:postman-mock-chooseapi.png[]
-. Give the mock server a name, for example `ProductCatalog Mock Server` and click on *Create Mock Server* at the bottom of the page.
+[CAUTION]
+====
+The order in which the Mocks are displayed could be different from the screenshot. So ensure you are choosing *product-list-with-inventory* and not the *product-list-without-inventory*
+====
 +
-image::postman-mock-create-server.png[]
-
-. You will be shown details of the mock server URL. Make a note of the URL.
+image:mic-view-api-operation1.png[] 
+. Open a new browser tab, and navigate to the Mock URL you copied in the above step.
+. You can view the list of products from the example of the Mock. Note that the name of the Quarkus T-shirt now says `Jaya's Awesome Quarkus T-shirt` (or the name you have for this product)
 +
-image::postman-mock-server-url.png[]
+image:mic-final-mock.png[] 
+. These mock end points of the mock server can be used by the dev teams that are dependent on the APIs, to continue development in parallel without having to wait for the backend services to be fully developed, thereby accelerating time to market.
 
-== Test the imported API using the mock server
-. Explore *Collections* menu from the left-hand side, and you will be able to see the examples that have been already created while the API was designed.
-. Click on the `Get list of product by id` from the `Product Catalog API`. This opens a tab on Postman which you can use to issue a request.
-+
-image::postman-choose-prodbyid.png[] 
 
-. Replace the following parameters and click *Send*.
-** `{{baseUrl}}` in the address field with the Mock server's URL
-** `{{:ids}}` in the address field with `329299`
-
-. You can view the list of products in the bottom panel. Note that the name of the Quarkus T-shirt now says `Jaya's Awesome Quarkus T-shirt` (or the name you have for this product)
-+
-image::postman-choose-prodbyid-response.png[]
-
-. These mock end point of the  mock server can be used by the dev teams that are dependent on the APIs, to continue development in parallel without having to wait for the backend services to be fully developed, thereby accelerating time to market.
-
-In the next step, you will learn to protect the API by using Red Hat OpenShift API Management. 
+Go ahead and close all the other browser tabs but this Instructions browser tab you are viewing. +
+In the next step, you will learn to protect the API by using Red Hat 3scale API Management. 

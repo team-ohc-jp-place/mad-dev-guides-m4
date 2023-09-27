@@ -1,72 +1,90 @@
 :imagesdir: ../assets/images
-= Publish, discover, and reuse artifacts with OpenShift Service Registry
+= Publish, discover, and reuse artifacts with Red Hat build of Apicurio Registry
 
-https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-service-registry[OpenShift Service Registry,role=external, window=product-page] is a datastore for sharing standard event schemas and API designs across event-driven and API architectures. 
+https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registry^, window=_blank] is a datastore for sharing standard event schemas and API designs across event-driven and API architectures. 
 
 == Goals of this lab
-* In this section you will explore and learn about Service Registry
+* Import the OpenAPI Spec into Service Registry
 * Enable Content Rules to test OpenAPI format validity
 
-== Explore Red Hat OpenShift Service Registry
+== Launch Service Registry
 
-. If not already open, navigate to the https://console.redhat.com/beta/application-services/service-registry[Service Registry,role=external,window=service-registry] from the browser. If necessary, login with your Red Hat account that you are using for this workshop.
-
-. You will see a listing of all Service Registry instances. In this lab, you will use the Service Registry instance `globex` that you created in a previous step. 
+. Launch *Service Registry* by accessing https://service-registry-%USERID%.%SUBDOMAIN%/ui/[Service Registry^, window="service_registry_url"]
 +
-image::osr_landing_page.png[]
-
-. Click on the registry `globex` to view the artifacts. You will see the schema `globex / Product Catalog API (ProductCatalogAPI)` that you exported from the `API Designer` in the previous section of the lab.
+image::sr-landing.png[]
 +
-image::osr_artifacts.png[]
-
-. Click on the `Product Catalog API` to view the details of the ProductCatalogAPI schema. This overview page provides details about the schema. 
+[NOTE]
+====
+Red Hat build of Apicurio Registry has been set up within OpenShift *globex-apim-%USERID%* namespace. You can access the deployment from the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console], and if required login with(`%USERID%/openshift`). 
+====
+. Click on the *Upload artifact* button as shown in the above screenshot. You will be presented with a *Upload Artifact* wizard 
 +
-image::osr-api-overview.png[]
+image::sr-upload-artifact.png[]
+
+. In the wizard, enter the following details, and click on the *Upload* button. 
+.. Use the exact same values as instructed below to avoid errors in the other sections of this module.
++
+- *Group*: `globex`
+- *ID of the artifact*: `ProductCatalogAPI`
+- *Artifact textarea*: Click on *Browse..* button to upload the Product Catalog OpenAPI downloaded in the previous step, or `Drag & drop` the file into the textarea.
+.. Click the *Upload* button
++
+image::sr-spec-setting.png[]
+
+. Note that the *Globex Product Catalog API Gateway* artifact has been uploaded to *Service Registry* and can be viewed on the webpage
++
+image::sr-uploaded.png[]
++
+[NOTE]
+====
+* This OpenAPI schema can be easily shared with others through the https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^].
+* This schema can be used for generating client SDK as well by clicking on the *Generate client SDK* link that can be seen in the screenshot above.
+====
+
 . Click on the *Documentation* tab to view the OpenAPI specifications 
 . Click on the *Content* tab to view the schema in JSON format
 
-== Enabling Content Rules for format validity
+== Enabling Artifact-specific rules for format validity
 . Navigate back to the *Overview* tab.
 
-. Observe the *Content rules* section which provides options to validate the schema and enforce compatibility while the artifact is updated.
+. Observe the *Artifact-specific rules* section which provides options to validate the schema and enforce compatibility while the artifact is updated.
 +
-image::osr-api-content-rules.png[] 
+image::sr-api-content-rules.png[] 
 
-. Click on *Enable* button for *Validity rule* and choose *Full* from the dropdown. This rule ensures that the content is valid when the artifact is updated.
+. Click on *Enable* button (highlighted in the above screenshot) for *Validity rule* and choose *Full* from the dropdown. This rule ensures that the content is valid when the artifact is updated.
 +
-image::osr-content-rules.png[]
+image::sr-content-rules.png[]
 
 . Click on the *Content* tab. Copy the entire content of the artifact shown in this tab into the memory with `Ctrl+A` and `Ctrl+C`.
 +
-image::osr-view-content.png[]
+image::sr-view-content.png[]
 
-. Click on the *Upload new version* button on the top-right of the page.
+. Click on the *Upload new version* button on the top-right of the page, and paste the content of the schema that you copied in the previous steps into the textbox provided with `Ctrl+V`. 
 +
-image::osr-upload-new-popup.png[] 
-
-. Paste the content of the schema that you copied in the previous steps into the textbox provided with `Ctrl+V`. 
+image::sr-upload-new-popup.png[] 
 
 . Delete the closing `}` at the bottom of the text box and click *Upload*.
 +
 * The original content:
 +
-image::osr-original-api-content.png[] 
+image::sr-original-api-content.png[] 
 * After introducing an error:
 +
-image::osr-edit-schema-with-error.png[]
+image::sr-edit-schema-with-error.png[]
 
-. You will observe an `*Invalid Content Error*` stating that one of the content rules has been violated, and displaying details of the error. The artifact Content is not updated.
+. You will observe an `*Invalid Content Error*` stating that one of the content rules has been violated, and displaying details of the error. The artifact's content is not updated.
 +
-image::osr-error.png[]
+image::sr-error.png[]
 
 . Click on `Close` to dismiss the error.
 
 [NOTE]
 ====
-In real-life, the content rules are very helpful when APIs are used to manage Service Registry schema updates. To learn more about how to use manage the Service Registry content from the https://access.redhat.com/documentation/en-us/red_hat_openshift_service_registry[product page^, window=product-page] under the `Manage Service Registry content` section.
-
-OpenShift Service Registry also provides full integration with Red Hat OpenShift Streams for Apache Kafka to map your Kafka topics to the appropriate schemas. https://access.redhat.com/documentation/en-us/red_hat_openshift_streams_for_apache_kafka/1/guide/7d28aec8-e146-44db-a4a5-fafc1f426ca5#_af7a70bc-0a97-41c9-a06a-2a0287bd7119[Read more^, window=product-page] about this
-
+In real-life, the content rules are very helpful when APIs are used to manage Service Registry schema updates. To learn more about view the https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Product Documentation for Red Hat build of Apicurio Registry^, window=product-page]
 ====
 
+Remember, this OpenAPI schema can be easily shared with others through the https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^]. 
+
+
+You can close all the other browser tabs but this Instructions browser tab you are viewing. +
 In the next step you will explore the use of the ProductCatalogAPI specification to setup mocks.

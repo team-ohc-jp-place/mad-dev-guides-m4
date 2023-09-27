@@ -2,89 +2,75 @@
 :icons: font
 :imagesdir: ../assets/images
 
-= Design APIs with OpenShift API Designer
+= Design APIs
 
-== Introduction
-As part of the API-First approach, the first step  - of course - is to design those APIs. API Designer is a tool to design your APIs (OpenAPI, AsyncAPI) and schemas (Apache Avro, Google Protobuf, JSON Schema). You can manage your collection of API and schema designs by creating, importing, and editing. Save your work by downloading your designs locally or by exporting them to OpenShift Service Registry. 
-
+As part of the API-First approach, the first step, of course, is to design the APIs. API Designer is a tool to design your APIs (OpenAPI, AsyncAPI) and schemas (Apache Avro, Google Protobuf, JSON Schema). 
 
 == Goals of this lab
-In this section you will import an existing API that will be used as a starting point, explore the designer while making a few minor edits and then export this to a Service Registry
 
-API Designer is under `Service preview` and can be accessed through the Red Hat Hybrid Cloud Console via https://console.redhat.com/application-services/api-designer[API Designer^, window=api-designer]
-
-*Note:* +
-OpenShift API Designer is in Beta and all your designs are stored locally in your browser. Clearing your browser cache or switching to a new browser might result in loss of data. Make sure you save your work by downloading your designs locally or by exporting them to a Red Hat OpenShift Service Registry instance.
-
+In this section you will import an existing API that will be used as a starting point, explore the designer while making a few minor edits. You will then export this to a Service Registry in the next step.
 
 == Import API 
 
-. Navigate to https://console.redhat.com/application-services/api-designer[OpenShift API Designer^,window=api-designer] and if needed login using your Red Hat account.
-. On the landing page, click on the *Import design* button and choose the *Import from URL* option.
+To import the OpenAPI draft into API designer, you can import the content as text OR upload as file. To keep things simple in this workshop, you will import the content by simply pasting the draft spec into the API designer.
+
+[NOTE]
+====
+In a real-world scenario you might start with an empty API specification, and define the different elements of the spec document. You would then export the spec in JSON or YAML format (by copying the contents from the source editor) to your local file system and push it to version control.
+====
+
+. The API Designer has been pre-deployed on OpenShift. Launch the API Designer by clicking on https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer]
+. Click on the *New API* button.
 +
 image::api-designer-import-url.png[]
-
-. Paste the following URL into the URL field and click on the *Fetch* button. 
+* Click on the *Source Tab* on the *New API* page, and delete the entire content in the window. 
+** Note: Keep this tab open. You will be pasting the draft OpenAPI into this window.
 +
-[.console-input]
-[source,bash]
-----
-https://raw.githubusercontent.com/cloud-services-summit-connect-2022/product-catalog-api/main/openapi/openapi-spec.yml
-----
+image::api-new-api.png[]
+. Click https://raw.githubusercontent.com/cloud-services-summit-connect-2022/product-catalog-api/main/openapi/openapi-spec.yml[here^] to view the draft OpenAPI .
+. Copy the entire contents from this webpage (Ctrl+A and Ctrl+C)
+. Now paste the copied content (the draft OpenAPI) from the above step into the API designer's *Source Tab* replacing all of the existing content. Click on *Save button* as highlighted in the screenshot below.
 +
-image::api-designer-import-url-popup.png[]
-
-. Observe  the fields that are populated with the data from the imported API specifications. Click on the *Import* button to import the specs into the API Designer
+image::api-paste-api.png[]
+. Navigate back to the *Design Tab*
 +
-image::api-designer-api-data.png[]
+image::api-design-tab.png[]
 
 . You can now view  the `Product Catalog API` on the browser. You can explore the Paths, Data Types and Responses that are part of this API.
 +
 image::api-designer-api-import-complete.png[]
-
 
 == Explore and edit the API 
 . Click on the `product-list` under the `Responses` section
 . Click on the `2 example(s) defined` link. You will see the list of examples given
 +
 image::api-designer-product-list-response-eg-list.png[]
-. On moving the mouse over the examples, you can choose to click on the *Edit* button shown as a *pencil icon*. This opens the example's content.
+. At the right-most side of the *Examples* table (scroll sideways), hover the mouse over the `product-list-with-inventory` example and click on the *Edit* button shown as a *pencil icon*. This opens the example's content.
++
+image::api-click-edit.png[]
+. The example's content is displayed in the popup window.
 +
 image::api-designer-sample-original.png[]
-. Replace the name of the first product by appending your name. I've changed this from `Quarkus T-shirt` to `Jaya's Awesome Quarkus T-shirt`
+. Replace the name of the first product by adding your name. I've changed this from `Quarkus T-shirt` to `Jaya's Awesome Quarkus T-shirt`
+.. Make sure you click  on the *Edit* button to confirm your edits.
 +
 image::api-designer-sample-updated.png[]
-. Make sure you click  on the *Edit* button to confirm your edits.
+. The changes made are now visible on the main screen. 
 +
 image::api-designer-sample-edit-complete.png[]
-. Click on the *Save* button on the top-right corner to save your edits.
+* The OpenAPI specification is now ready to be downloaded. Click on the _down arrow_ button adjacent to *Save As..* and then choose *Save as JSON* button found on top-right of the page. The file gets saved automatically in the *Downloads folder* of your computer.
 +
-image::api-designer-sample-edit-save.png[]
+image::api-download-as-json.png[]
+* The Product Catalog OpenAPI spec is ready to be governed with a Service Registry.
 
 
-== Export this API into the Service Registry
-The next step is to export this API into the Service Registry so that this can be used as a single source of truth by the developers.
+[NOTE]
+====
+With the API Designer all your designs are stored locally in your browser. Clearing your browser cache or switching to a new browser might result in loss of data. Make sure you save your work by downloading your designs locally or as described in the next step export them to a Red Hat Service Registry instance.
+====
 
-. Click on the `Action` button found on the top-right corner.
-+
-image::api-designer-export-actions.png[]
 
-. Choose the `Export to Service Registry` option from the drop down
+{empty} +
 
-. Fill the form `Export to Service Registry` with the following details. Click on the `Export` button to complete the action.
-+
-[width="50%"]
-|=======================================
-| Registry Instance  | `globex`
-| Group              | `globex`
-| ID                 | `ProductCatalogAPI`
-| Version            | `1.0`              
-|=======================================
-+
-image::api-designer-export-2-osr.png[]
-
-. A success message will appear on the top right of the screen notifying that the API export is successful.
-+
-image::api-designer-api-export-complete.png[]
-
-In the next section, you will explore the OpenShift Service Registry.
+You can close all the other browser tabs but this Instructions browser tab you are viewing. +
+In the next section, you will import this API spec and govern it with Red Hat Service Registry.

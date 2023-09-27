@@ -11,24 +11,22 @@
 |Average Time to Complete	 |60 minutes
 |===
 
-This workshop aims to showcase how to enhance applications with API management and event streaming technologies.
+In this module you will discover how an API First Approach provides the right framework to build microservices and APIs based systems. The stages of an API life cycle cover both the implementation life cycle and the management life cycle.
+
 
 ## Key Takeaways
 
-* The introduction of a streaming platform (Apache Kafka) to generate a stream of user activity events from the application web UI. 
-* The introduction of an API Management solution (Red Hat OpenShift API management) to expose, secure and manage the APIs to the application backend services. 
 * API First approach to design, host schema, mock APIs to  allows parallel streams of development between API implementers and API consumers.
+* The introduction of an API Management solution (Red Hat 3scale API management) to expose, secure and manage the APIs to the application backend services. 
 
 ## Technology Stack
 
-* Red Hat OpenShift API Management
-* Red Hat OpenShift Streams for Apache Kafka
+* Red Hat 3scale API Management
 * Red Hat build of Quarkus
-* OpenShift API Designer
-* OpenShift API Service Registry
-* OpenShift Connectors
-* Microcks/Postman
-* Quay
+* Red Hat API Designer
+* Red Hat build of Apicurio Registry
+* Microcks
+
 
 ## Documentation
 

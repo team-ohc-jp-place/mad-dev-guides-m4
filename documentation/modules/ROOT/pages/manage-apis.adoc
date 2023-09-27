@@ -1,0 +1,315 @@
+:imagesdir: ../assets/images
+
+= Adding API Management capabilities to the application
+
+== Introduction
+
+Once the backend teams fully develop the APIs backends, the APIs can be published for external consumption with an API management platform. Globex uses https://www.redhat.com/en/technologies/jboss-middleware/3scale[Red Hat 3scale API Management,role=external,window=product_page] for managing these APIs. The external teams such as the mobile team will be able to use the built-in developer portal of 3scale to sign up for various application plans. 
+
+== Goals of this lab
+In this part of the workshop you will 
+
+* Launch the 3scale tenant which has been created for you
+* Manage and secure the predeployed Product Catalog API with 3scale
+* Test secure access of the Product Catalog API
+* View the traffic analytics generated
+
+== Access 3scale
+. Navigate to https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] to launch the 3scale tenant created for you.
+. Login with your username and password (`%USERID%/openshift`)
++
+image:3scale-login.png[] 
+. Notice than a sample API which has been already set up. You will not be using this but will be creating a new one for this workshop for the *Product Catalog API* that you've been working on so far.
++
+image:3scale-landing-page.png[]
+
+
+[#3scale-definitions]
+== Create Mobile Gateway Backend, Product and ActiveDoc on 3scale
+
+To integrate and manage the Product Catalog API in 3scale, you need to create Products and Backend. 
+
+In this lab you will declare the 3scale assets like Product and Backend as Kubernetes Custom Resources. The Custom Resources are detected by the 3scale operator which applies and synchronizes the Custom Resources (CRDs) on the 3scale platform.
+
+Note: <<appendix.adoc#3scale-definitions, Click to learn more about Backends, Products, ActiveDocs and CRDs>>
+
+[#create-backend]
+=== Create 3scale Backend
+
+To create the Backend for Product Catalog API Gateway, you will need the Service URL of Product Catalog deployment which is already running on OpenShift. +
+
+Note: <<appendix.adoc#openshift-service, Click to learn more about OpenShift/Kubernetes Service and how to find it>>
+
+. Navigate to the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console]. If required, login with your username and password (`%USERID%/openshift`). Open the *Developer* perspective in the *globex-apim-%USERID%* 
+. On the OpenShift console, click on the image:console-import-yaml.png[] icon in the top menu on the right. This opens an editor where you can enter a Kubernetes resource definition in YAML format.
++
+image:apim-openshift-import.png[]
++
+.. Paste the following *Backend* 3scale Custom Resource in the editor.
++
+[.console-input]
+[source,yaml]
+----
+apiVersion: capabilities.3scale.net/v1beta1
+kind: Backend
+metadata:
+  name: globex-product-catalog-backend
+  namespace: globex-apim-%USERID%
+spec:
+  name: "Globex Product Catalog Backend"
+  systemName: "globex-product-catalog-backend"
+  privateBaseURL: "http://catalog.globex-%USERID%.svc.cluster.local:8080"
+  providerAccountRef:
+    name: 3scale-tenant-secret
+  metrics:
+    hits:
+      description: Number of API hits
+      friendlyName: Hits
+      unit: "hit"
+  mappingRules:
+    - httpMethod: GET
+      pattern: "/"
+      increment: 1
+      metricMethodRef: hits
+
+----
++
+image:apim-create-backend-cr.png[] 
++
+.. Click *Create* to create the 3scale Backend resource. The 3scale operator creates the Backend resource in your 3scale tenant. 
+.. You are shown the *Backend details* page. Note under the *Conditions* section at the bottom of the page, the Type *Synced* is set with Status as *True*
++
+image:apim-create-backend-details.png[] 
+. Click on https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] to view the backend created for you.
++
+image:apim-backend-created.png[] 
++
+.. Click on the Backend *Globex Product Catalog Backend* link to view the Backend overview page.
++
+image:apim-backend-overview.png[] 
+
+
+---
+
+[#3scale-product]
+=== Create 3scale Product and ActiveDocs
+The next step is to create a 3scale Product, Application Plans for the Product, and also ActiveDocs for the Product Catalog API
+
+. Navigate to the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[OpenShift Console^,role=external,window=console]. 
+. On the OpenShift console, click on the image:console-import-yaml.png[] icon in the top menu on the right. This opens an editor where you can enter a Kubernetes resource definition in YAML format.
+.. Paste the following *Product and ActiveDoc* 3scale Custom Resource in the editor.
++
+[.console-input]
+[source,yaml]
+----
+apiVersion: capabilities.3scale.net/v1beta1
+kind: Product
+metadata:
+  name: globex-product-catalog-product
+  namespace: globex-apim-%USERID%
+spec:
+  name: "Globex Product Catalog"
+  systemName: "globex-product-catalog-product"
+  providerAccountRef:
+    name: 3scale-tenant-secret
+  applicationPlans:
+    basic:
+      name: "Globex Catalog Basic Plan"
+      setupFee: "0"
+      published: true
+    premium:
+      name: "Globex Catalog Premium Plan"
+      setupFee: "100"
+      published: true
+  backendUsages:
+    globex-product-catalog-backend:
+      path: /
+
+---
+kind: ActiveDoc
+apiVersion: capabilities.3scale.net/v1beta1
+metadata:
+  name: globex-product-catalog-activedoc
+  namespace: globex-apim-%USERID%
+spec:
+  activeDocOpenAPIRef:
+    url: "https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI"
+  published: true
+  name: globex-product-catalog-activedoc
+  providerAccountRef:
+    name: 3scale-tenant-secret
+  productSystemName: globex-product-catalog-product
+    
+----
++
+image:apim-prod-activedoc-cr.png[] 
+.. Click *Create* to create the 3scale resources, and the 3scale operator creates these resources in your 3scale tenant
++
+image:apim-prod-activedoc-created.png[]
+. Click on https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] to view the Product and ActiveDoc created for you
++
+image:apim-prod-created.png[] 
+. Click on the Product *Globex Product Catalog* link to view the overview page. Note that the *Backends* and the *Published Application Plans* that you created have been attached to the Product.
++
+image:apim-prod-overview.png[] 
+
++
+. Click on *ActiveDocs* link on the left hand navigation
++
+image:apim-prod-activedocs.png[] 
++
+.. Click on the *globex-product-catalog-activedoc* ActiveDoc to view the API
++
+image:apim-activedoc-view.png[]
+
+[#apicast]
+. Before you can start accessing the Product Catalog API, you must promote the APIcast configuration as below. +
++
+Note: <<appendix.adoc#apicast, Click to learn more about APIcast>>
+
+. From https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale homepage^,window=3scale], under the Products section, click on *Globex Product Catalog* to view the Product's overview page.
+. From the left hand menu, navigate to *Integration* > *Configuration*
++
+image:apim-prod-integ-config.png[]
+. Under *APIcast Configuration*, click *Promote to v.x Staging APICast* to promote the APIcast configurations.
++
+image::apim-promote-staging.png[]
+. Similarly click *Promote to v.x Production APICast* 
++
+image::apim-promote-prod.png[]
+
+
+== Create an Application for the default account
+
+. Navigate to https://3scale-%USERID%-admin.apps.cluster-vxhmd.sandbox1011.opentlc.com/buyers/accounts[Audience section^, window=3scale] of 3scale from the the top menu bar
++
+image:apim-audeince-menu.png[] 
+. You will be shown the *Accounts > Listing* page showing a default *Developer* account that has already been created.
++
+image:apim-developer-account.png[]
+. Click on *Developer* to view the Developer Account details. 
+.. Click on the *+++<u>1 Application</u>+++* link on the top of the page
++
+image:apim-dev-acc-details.png[]
+. The existing list of applications associated with this Developer user is displayed. 
+.. Note that there is already a default application which has been associated with this user. 
+.. Click *Create Application* button
++
+image:apim-create-app.png[]
+. Choose/Enter the following details in the *Create Application* page:
+* Product
++
+[.console-input]
+[source,yaml]
+----
+Globex Product Catalog
+----
+* Application plan
++
+[.console-input]
+[source,yaml]
+----
+Globex Catalog Basic Plan
+----
+* Name
++
+[.console-input]
+[source,yaml]
+----
+product-catalog-basic
+----
+* Description
++
+[.console-input]
+[source,yaml]
+----
+Globex Product Catalog - Basic App
+----
+
++
+image:apim-new-app-data.png[]
+. Click the *Create Application* button.
+. You can see the *product-catalog-basic* application details now as shown below.
++
+image:apim-create-app-success.png[]
+. Make a note of the `User Key` that is displayed under the *API Credentials* section as highlighted in the above screenshot. This will be used while making calls to the API.
+
+[NOTE]
+====
+Note: In real life, developers will create Applications from the integrated 3scale Developer Portal.
+====
+
+{empty}
+
+---
+
+== Test Product Catalog API Access
+
+To test the secure access of this API, you will use a simple Angular application which reads from the Product Catalog API endpoint and displays it on the browser.
+
+. Navigate to the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console,role=external,window=console] to access the *globex-apim-%USERID%* namespace in it.
+. Click on the *Open URL* icon highlighted in the screenshot below to view the Angular mobile application.
++
+image:apim-launch-mobile.png[]
+. You will see an empty page because the application is not configured to talk to the Product Catalog API yet. In the next steps you will configure the app to connect with the Product Catalog API.
++
+image:apim-mobile-empty.png[]
+. From the OpenShift console that you have already opened, click on *globex-mobile* as highlighted below to view the *Deployment* details.
++
+image:apim-namespace.png[]
+. In the deployment panel, click on the Deployment *globex-mobile* to navigate to the Deployment details page.
++
+image:apim-mobile-deployment-panel.png[]
+. Click on the *Environment* tab from the Deployment details page.
++
+image:apim-mobile-deployment-details.png[]
+. Note that there are two variables with values `replace-me`. You will need to update these variables which will need to be fetched from 3scale. +
+. Update the 2 placeholders as instructed below
++
+image:apim-mobile-env.png[]
+. *GLOBEX_PRODUCT_CATALOG_API*: We will use the Staging APICast URL of the *Globex Product Catalog* created in 3scale. 
+* Launch https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale], and click on *Globex Product Catalog* link to view the Product Details
+* Next navigate to *Integration > Configuration* from the left hand navigation, and copy the URL show under *Staging APIcast* section
++
+image:apim-staging-url.png[]
++
+* Paste the URL copied in the above step into the globex-mobile Deployment's Environment variable *GLOBEX_PRODUCT_CATALOG_API*
++
+image:apim-staging-url-pasted.png[]
+. *USER_KEY*: This is the API Credentials that you were provided when you signed up for an Application Plan
+** Click https://3scale-%USERID%-admin.%SUBDOMAIN%/p/admin/applications[Applications^,window=3scale] to view the list *Applications for Developer* account, and click on *product-catalog-basic* application.
++
+image:apim-developer-applications.png[]
+** Copy the *User Key* as show in this page
++
+image:apim-user-key-var.png[]
+** Paste this into the Deployment Environment variable *USER_KEY*
++
+image:apim-user-key-pasted.png[]
+. The globex-mobile Deployment's Environment values should look similar to this. Click on *Save* button at the bottom of the page. 
++
+image:apim-mobile-env-complete.png[]
+
+. A new pod will be automatically created with the new endpoint and user_key, and the application is ready to be tested. 
+.. Click on the Pod tab to view the creation of a new pod. You will need to be quick or you may miss the pod creation :)
++
+image:apim-mobile-new-pod.png[]
+. Launch https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] to view the products in a browser. It may take a couple of seconds for the data to load.
++
+image:apim-mobile-browser-view.png[]
+
+
+== View Traffic Analytics
+. Refresh the https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] page a few times to generate traffic.
+. Navigate to https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale], and click on *globex-product-catalog-product* to view the Product Details
+. Click on the *Analytics -> Traffic* link on the left hand side menu. You will see the *Hits* details. 
+. This section provides insights in terms of the number of hits for the product and other traffic analysis details as well.
++
+image:apim-traffic.png[]
+ 
+
+== Summary
+
+Congratulations! You have reached the end of the *Manage and secure APIs with OpenShift API Management* module of this workshop. You learnt about the various aspects of API Lifecycle management using a gamut of technologies including Red Hat build of Apicurio Registry, Red Hat 3scale API Management, Apicurio design and Microcks. 
+
+To learn more about click https://developers.redhat.com/topics/api-management[API Management, window=_blank]
