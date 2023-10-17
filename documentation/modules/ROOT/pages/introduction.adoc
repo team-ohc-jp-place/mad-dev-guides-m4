@@ -1,51 +1,51 @@
 = はじめに
 :imagesdir: ../assets/images
 
-In this module you will discover how an API First Approach provides the right framework to build microservices and APIs based systems. The stages of an API life cycle cover both the implementation life cycle and the management life cycle.
+このモジュールでは、API ファースト アプローチがマイクロサービスと API ベースのシステムを構築するための適切なフレームワークを提供する方法を学びます。 API ライフ サイクルの各段階には、実装ライフ サイクルと管理ライフ サイクルの両方が含まれます。
 
-* The *Implementation* phase allows you to collaboratively design an API before determining and developing the various channels and applications that will use the API. The design-first approach advocates for designing the API's contract before writing any code.
-* The *Management* phase allows you to manage access to the implement APIs, measure consumption and also track utilization of the APIs to perhaps even monetize the APIs
+* *Implementation* フェーズでは、API を使用するさまざまなチャネルやアプリケーションを決定して開発する前に、API を共同設計できます。 design-firstのアプローチでは、コードを記述する前に API のコントラクトを設計することが推奨されます。
+* *Management* フェーズでは、API の実装へのアクセスを管理し、使用量を測定し、API の使用状況を追跡して、API を収益化することもできます。
 
-== Globex's Digital Transformation Journey
+== Globex のデジタル変革の歩み
 
-Globex, a fictitious retail company, has completed the modernization of their existing retail e-commerce web application as part of their modernization journey. A schematic overview of the current state of the application as show below:
+架空の小売会社である Globex は、最新化の取り組みの一環として、既存の小売電子商取引 Web アプリケーションの最新化を完了しました。 アプリケーションの現在の状態の概要を以下に示します。
 
 image::globex-phase1.png[width=60%]
 
-As a next step Globex would like to expand business with a *multi-channel retailing strategy* through a mobile app and partner channels. This means that the new channels will need access to their core backend API services. 
+Globex は次のステップとして、モバイル アプリとパートナー チャネルを通じた *マルチチャネル小売戦略* でビジネスを拡大したいと考えています。 これは、新しいチャネルがコア バックエンド API サービスにアクセスする必要があることを意味します。
 
-To secure the access to Globex's core APIs that will be used by the new channels, an API Management platform is needed. To build a holistic API Management solution, the team decides to adopt an *API First approach* spanning design, governance, mock and management of APIs - which will enable rapid development across teams. 
-
-
-== Goals of this lab
-In this module you will follow this journey:
-
-* *Design* an API resulting in an OpenAPI schema
-* *Govern* the schema with a registry for use by various teams
-* *Mock* the APIs to enable faster inner loop development
-* *Manage and Secure* APIs to allow access for external teams
+新しいチャネルで使用される Globex のコア API へのアクセスを保護するには、API 管理プラットフォームが必要です。 総合的な API 管理ソリューションを構築するために、チームは、API の設計、ガバナンス、モック、管理にわたる *API First アプローチ* を採用することを決定しました。これにより、チーム全体での迅速な開発が可能になります。
 
 
-== Deployment architecture Overview
-Here is a view of the deployment architecture. +
+== このラボの目標
+このモジュールでは、次の手順に従います。
+
+* API を *設計*し、OpenAPI スキーマを生成する
+* さまざまなチームが使用できるように、レジストリを使用してスキーマを *管理*する
+* API を *モック（擬似的に実行）* して、より高速な内部ループ開発を可能にする
+* 外部チームのアクセスを許可するAPI の *管理とセキュリティ保護*
+
+
+== アーキテクチャの概要
+アーキテクチャのイメージを次に示します。 +
 
 image::globex-deployment-apim.png[]
 
 
-* The services (primarily Inventory and Catalog), and the databases are deployed on Red Hat OpenShift. 
-* API Designer and Red Hat build of Apicurio Registry, based on https://www.apicur.io/[Apicurio^, window=info], are used to *Design* and *Govern* the APIs
-* https://microcks.io/[Microcks^, window=info], a popular opensource project, is used to *mock* the APIs
-* https://www.redhat.com/en/technologies/jboss-middleware/3scale[Red Hat 3scale Management^,window=info] is an API Management platform used to *manage and secure* the APIs. 3scale allows you to offer the same set of APIs for different audiences through packaging and unique consumption plans. 
+* サービス (主にインベントリーとカタログ) とデータベースは Red Hat OpenShift にデプロイされています。
+* https://www.apicur.io/[Apicurio^, window=info] に基づく API デザイナーと Red Hat build of Apicurio Registry を API の *設計* と *管理* に使用します。
+* よく使われるのオープンソースの https://microcks.io/[Microcks^, window=info] が API を *モック（擬似的に実行）* するために使用します。
+* https://www.redhat.com/en/technologies/jboss-middleware/3scale[Red Hat 3scale Management^,window=info] は、API を「管理およびセキュリティ保護」するために使用される API 管理プラットフォームです。 3scale を使用すると、パッケージ化と独自の使用プランを通じて、さまざまな対象者に同じ API セットを提供できます。
 
 
-== Explore the environment
+== 環境の探索
 
-This module uses two namespaces that have been deployed within your OpenShift environment. 
+このモジュールでは、OpenShift 内にデプロイされた 2 つの namespace を使用します。
 
-. In a browser window, navigate to the console of the lab OpenShift cluster at link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole]. Login with your username and password (`%USERID%/openshift`). Open the *Developer* perspective in the *globex-apim-%USERID%* namespace.
-. The *globex-apim-%USERID%* namespace contains deployments needed to design, govern and manage your APIs.
+. ブラウザウィンドウで、OpenShift クラスターのlink:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole] に移動します。ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-apim-%USERID%* namespace で *Developer* パースペクティブを開きます。
+. *globex-apim-%USERID%* namespace には、API の設計、管理、管理に必要なデプロイメントが含まれています。
 +
 image:apim-namespace.png[]
-. The *globex-%USERID%* namespace contains the Backend services deployed by Globex. From the *Developer* perspective, switch to the *globex-%USERID%* namespace by using the drop down. 
+. *globex-%USERID%* namespace には、Globex によってデプロイされたバックエンド サービスが含まれています。 *Developer* パースペクティブから、ドロップダウンを使用して *globex-%USERID%* namespaceに切り替えます。
 +
 image:globex-namespace.png[]
