@@ -1,90 +1,90 @@
 :imagesdir: ../assets/images
-= Publish, discover, and reuse artifacts with Red Hat build of Apicurio Registry
+= Publish, discover, and reuse artifacts with Red Hat build of Apicurio Registryを用いた成果物の公開、発見、再利用
 
-https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registry^, window=_blank] is a datastore for sharing standard event schemas and API designs across event-driven and API architectures. 
+https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registry^, window=_blank] は、イベント駆動型および API アーキテクチャ間で標準イベント スキーマと API 設計を共有するためのデータストアです。
 
-== Goals of this lab
-* Import the OpenAPI Spec into Service Registry
-* Enable Content Rules to test OpenAPI format validity
+== このラボの目標
+* OpenAPI 仕様をサービス レジストリにインポートする
+* コンテンツ ルールを有効にして OpenAPI 形式の有効性を確認する
 
-== Launch Service Registry
+== サービスレジストリの起動
 
-. Launch *Service Registry* by accessing https://service-registry-%USERID%.%SUBDOMAIN%/ui/[Service Registry^, window="service_registry_url"]
+. https://service-registry-%USERID%.%SUBDOMAIN%/ui/[ここ^, window="service_registry_url"] にアクセスして *Service Registry* を起動します。
 +
 image::sr-landing.png[]
 +
 [NOTE]
 ====
-Red Hat build of Apicurio Registry has been set up within OpenShift *globex-apim-%USERID%* namespace. You can access the deployment from the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console], and if required login with(`%USERID%/openshift`). 
+Red Hat build of Apicurio Registry は、OpenShift *globex-apim-%USERID%* namespace 内にセットアップされています。 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] からデプロイメントにアクセスできます。必要であれば (`%USERID%/openshift`) でログインします。
 ====
-. Click on the *Upload artifact* button as shown in the above screenshot. You will be presented with a *Upload Artifact* wizard 
+. 上のスクリーンショットに示されているように、 *Upload artifact* ボタンをクリックします。 *Upload Artifact* ウィザードが表示されます。
 +
 image::sr-upload-artifact.png[]
 
-. In the wizard, enter the following details, and click on the *Upload* button. 
-.. Use the exact same values as instructed below to avoid errors in the other sections of this module.
+. ウィザードで次の詳細を入力し、 *Upload* ボタンをクリックします。
+.. このモジュールの他のセクションでのエラーを避けるために、以下の指示とまったく同じ値を使用してください。
 +
 - *Group*: `globex`
 - *ID of the artifact*: `ProductCatalogAPI`
-- *Artifact textarea*: Click on *Browse..* button to upload the Product Catalog OpenAPI downloaded in the previous step, or `Drag & drop` the file into the textarea.
-.. Click the *Upload* button
+- *Artifact textarea*: ボタンをクリックして、前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアに `ドラッグ アンド ドロップ` します。
+.. *Upload* ボタンをクリックします。
 +
 image::sr-spec-setting.png[]
 
-. Note that the *Globex Product Catalog API Gateway* artifact has been uploaded to *Service Registry* and can be viewed on the webpage
+.  *Globex Product Catalog API Gateway* アーティファクトが *Service Registry*  にアップロードされており、Web ページで表示できることに注意してください。
 +
 image::sr-uploaded.png[]
 +
 [NOTE]
 ====
-* This OpenAPI schema can be easily shared with others through the https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^].
-* This schema can be used for generating client SDK as well by clicking on the *Generate client SDK* link that can be seen in the screenshot above.
+* この OpenAPI スキーマは、 https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^] を通じて他のユーザーと簡単に共有できます。
+* このスキーマは、上のスクリーンショットにある *Generate client SDK*  リンクをクリックすることで、クライアント SDK の生成にも使用できます。
 ====
 
-. Click on the *Documentation* tab to view the OpenAPI specifications 
-. Click on the *Content* tab to view the schema in JSON format
+. *Documentation* タブをクリックして、OpenAPI 仕様を表示します。
+.  *Content* タブをクリックして、JSON 形式でスキーマを表示します。
 
-== Enabling Artifact-specific rules for format validity
-. Navigate back to the *Overview* tab.
+== 形式の有効性確認のためのアーティファクト固有のルールの有効化
+. *Overview* タブに戻ります。
 
-. Observe the *Artifact-specific rules* section which provides options to validate the schema and enforce compatibility while the artifact is updated.
+. アーティファクトの更新中にスキーマを検証し、互換性を強制するオプションを提供する  *Artifact-specific rules* セクションを確認してください。
 +
 image::sr-api-content-rules.png[] 
 
-. Click on *Enable* button (highlighted in the above screenshot) for *Validity rule* and choose *Full* from the dropdown. This rule ensures that the content is valid when the artifact is updated.
+. *Validity rule* の *Enable* ボタン(上のスクリーンショットで強調表示されている)をクリックし、ドロップダウンから *Full* を選択します。 このルールにより、アーティファクトが更新されたときにコンテンツが有効であることが確認されます。
 +
 image::sr-content-rules.png[]
 
-. Click on the *Content* tab. Copy the entire content of the artifact shown in this tab into the memory with `Ctrl+A` and `Ctrl+C`.
+. *Content* タブをクリックします。 「Ctrl+A」および「Ctrl+C」を使用して、このタブに表示されているアーティファクトのコンテンツ全体をクリップボードにコピーします。
 +
 image::sr-view-content.png[]
 
-. Click on the *Upload new version* button on the top-right of the page, and paste the content of the schema that you copied in the previous steps into the textbox provided with `Ctrl+V`. 
+. ページの右上にある *Upload new version*  ボタンをクリックし、表示されるテキストボックスに、 前の手順でコピーしたスキーマの内容を `Ctrl+V` で貼り付けます。
 +
 image::sr-upload-new-popup.png[] 
 
-. Delete the closing `}` at the bottom of the text box and click *Upload*.
+. テキスト ボックスの下部にある終わりの `}` を削除し、 *Upload* をクリックします。
 +
-* The original content:
+* 元のコンテンツ:
 +
 image::sr-original-api-content.png[] 
-* After introducing an error:
+* エラーを発生させるコンテンツ:
 +
 image::sr-edit-schema-with-error.png[]
 
-. You will observe an `*Invalid Content Error*` stating that one of the content rules has been violated, and displaying details of the error. The artifact's content is not updated.
+. コンテンツ ルールの 1 つが違反されていることを示す `*Invalid Content Error*` が表示され、エラーの詳細が表示されます。 アーティファクトのコンテンツは更新されません。
 +
 image::sr-error.png[]
 
-. Click on `Close` to dismiss the error.
+. `Close` をクリックしてエラー画面を閉じます。
 
 [NOTE]
 ====
-In real-life, the content rules are very helpful when APIs are used to manage Service Registry schema updates. To learn more about view the https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Product Documentation for Red Hat build of Apicurio Registry^, window=product-page]
+実際には、API を使用して Service Registry スキーマの更新を管理する場合、コンテンツ ルールは非常に役立ちます。 詳細については、 https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Product Documentation for Red Hat build of Apicurio Registry^, window=product-page]　をご覧ください。
 ====
 
-Remember, this OpenAPI schema can be easily shared with others through the https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^]. 
+この OpenAPI スキーマは、 https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^] を通じて他のユーザーと簡単に共有できることを思い出してください。
 
 
-You can close all the other browser tabs but this Instructions browser tab you are viewing. +
-In the next step you will explore the use of the ProductCatalogAPI specification to setup mocks.
+この手順で使用しているブラウザ タブ以外の他のブラウザ タブはすべて閉じてかまいません。 +
+次のステップでは、ProductCatalogAPI 仕様を使用してモックをセットアップする方法を探索します。
