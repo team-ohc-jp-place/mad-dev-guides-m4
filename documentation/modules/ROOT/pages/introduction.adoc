@@ -14,27 +14,27 @@ image::globex-phase1.png[width=60%]
 
 Globex は次のステップとして、モバイル アプリとパートナー チャネルを通じた *マルチチャネル小売戦略* でビジネスを拡大したいと考えています。 これは、新しいチャネルがコア バックエンド API サービスにアクセスする必要があることを意味します。
 
-新しいチャネルで使用される Globex のコア API へのアクセスを保護するには、API 管理プラットフォームが必要です。 総合的な API 管理ソリューションを構築するために、チームは、API の設計、ガバナンス、モック、管理にわたる *API First アプローチ* を採用することを決定しました。これにより、チーム全体での迅速な開発が可能になります。
+新しいチャネルで使用される Globex のコア API へのアクセスを保護するには、API 管理プラットフォームが必要です。 総合的な API 管理ソリューションを構築するために、チームは、API の設計（design）、統治（governance）、擬似的に実行（mock）、管理（management）にわたる *API First アプローチ* を採用することを決定しました。これにより、チーム全体での迅速な開発が可能になります。
 
 
 == このラボの目標
 このモジュールでは、次の手順に従います。
 
-* API を *設計*し、OpenAPI スキーマを生成する
-* さまざまなチームが使用できるように、レジストリを使用してスキーマを *管理*する
+* API を *設計* し、OpenAPI スキーマを生成する
+* さまざまなチームが使用できるように、レジストリを使用してスキーマを *統治* する
 * API を *モック（擬似的に実行）* して、より高速な内部ループ開発を可能にする
 * 外部チームのアクセスを許可するAPI の *管理とセキュリティ保護*
 
 
 == アーキテクチャの概要
-アーキテクチャのイメージを次に示します。 +
+ラボのアーキテクチャイメージを次に示します。 +
 
 image::globex-deployment-apim.png[]
 
 
 * サービス (主にインベントリーとカタログ) とデータベースは Red Hat OpenShift にデプロイされています。
-* https://www.apicur.io/[Apicurio^, window=info] に基づく API デザイナーと Red Hat build of Apicurio Registry を API の *設計* と *管理* に使用します。
-* よく使われるのオープンソースの https://microcks.io/[Microcks^, window=info] が API を *モック（擬似的に実行）* するために使用します。
+* https://www.apicur.io/[Apicurio^, window=info] に基づく API デザイナーと Red Hat build of Apicurio Registry を API の *設計* と *統治* に使用します。
+* よく使われるのオープンソースの https://microcks.io/[Microcks^, window=info] を API を *モック（擬似的に実行）* するために使用します。
 * https://www.redhat.com/en/technologies/jboss-middleware/3scale[Red Hat 3scale Management^,window=info] は、API を「管理およびセキュリティ保護」するために使用される API 管理プラットフォームです。 3scale を使用すると、パッケージ化と独自の使用プランを通じて、さまざまな対象者に同じ API セットを提供できます。
 
 
@@ -42,7 +42,7 @@ image::globex-deployment-apim.png[]
 
 このモジュールでは、OpenShift 内にデプロイされた 2 つの namespace を使用します。
 
-. ブラウザウィンドウで、OpenShift クラスターのlink:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole] に移動します。ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-apim-%USERID%* namespace で *Developer* パースペクティブを開きます。
+. ブラウザウィンドウで、OpenShift クラスターのlink:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole] に移動します。ユーザー名/パスワード (`%USERID%/openshift`) を使用してログインします。 *globex-apim-%USERID%* namespace で *Developer* パースペクティブを開きます。
 . *globex-apim-%USERID%* namespace には、API の設計、管理、管理に必要なデプロイメントが含まれています。
 +
 image:apim-namespace.png[]
