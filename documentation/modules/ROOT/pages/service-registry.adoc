@@ -1,5 +1,5 @@
 :imagesdir: ../assets/images
-= Publish, discover, and reuse artifacts with Red Hat build of Apicurio Registryを用いた成果物の公開、発見、再利用
+= Red Hat build of Apicurio Registryを用いた成果物の公開、発見、再利用
 
 https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registry^, window=_blank] は、イベント駆動型および API アーキテクチャ間で標準イベント スキーマと API 設計を共有するためのデータストアです。
 
@@ -26,7 +26,7 @@ image::sr-upload-artifact.png[]
 +
 - *Group*: `globex`
 - *ID of the artifact*: `ProductCatalogAPI`
-- *Artifact textarea*: ボタンをクリックして、前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアに `ドラッグ アンド ドロップ` します。
+- *Artifact textarea*: ボタンをクリックして、前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアにドラッグ アンド ドロップします。
 .. *Upload* ボタンをクリックします。
 +
 image::sr-spec-setting.png[]
