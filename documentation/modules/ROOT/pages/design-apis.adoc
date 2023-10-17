@@ -19,7 +19,7 @@ OpenAPI ドラフトを API デザイナーにインポートするには、コ�
 実際のシナリオでは、空の API 仕様から始めて、仕様ドキュメントのさまざまな要素を定義するかもわかりません。 その後は、仕様を JSON または YAML 形式で (ソース エディターから内容をコピーして) ローカル ファイル システムにエクスポートし、バージョン管理システムにプッシュします。
 ====
 
-. API Designer は OpenShift に事前にデプロイされています。https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer] をクリックして API デザイナーを起動します。
+. API Designer は OpenShift に事前にデプロイされています。 https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer] をクリックして API デザイナーを起動します。
 . *New API* ボタンをクリックします。
 +
 image::api-designer-import-url.png[]
