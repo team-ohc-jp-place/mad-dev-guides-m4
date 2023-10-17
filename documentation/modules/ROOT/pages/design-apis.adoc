@@ -2,75 +2,75 @@
 :icons: font
 :imagesdir: ../assets/images
 
-= Design APIs
+= APIの設計
 
-As part of the API-First approach, the first step, of course, is to design the APIs. API Designer is a tool to design your APIs (OpenAPI, AsyncAPI) and schemas (Apache Avro, Google Protobuf, JSON Schema). 
+API-First アプローチとして、最初のステップはもちろん API を設計することです。 API デザイナーは、API (OpenAPI、AsyncAPI) とスキーマ (Apache Avro、Google Protobuf、JSON スキーマ) を設計するためのツールです。
 
-== Goals of this lab
+== このラボの目標
 
-In this section you will import an existing API that will be used as a starting point, explore the designer while making a few minor edits. You will then export this to a Service Registry in the next step.
+このセクションでは、開始点として、既存の API をインポートし、いくつかの小さな編集を加えながらデザイナーを探索します。 次のステップでは、これをサービス レジストリにエクスポートします。
 
-== Import API 
+== APIのインポート
 
-To import the OpenAPI draft into API designer, you can import the content as text OR upload as file. To keep things simple in this workshop, you will import the content by simply pasting the draft spec into the API designer.
+OpenAPI ドラフトを API デザイナーにインポートするには、コンテンツをテキストとしてインポートするか、ファイルとしてアップロードします。 このワークショップでは作業をシンプルにするために、ドラフト仕様を API デザイナーに貼り付けてコンテンツをインポートします。
 
 [NOTE]
 ====
-In a real-world scenario you might start with an empty API specification, and define the different elements of the spec document. You would then export the spec in JSON or YAML format (by copying the contents from the source editor) to your local file system and push it to version control.
+実際のシナリオでは、空の API 仕様から始めて、仕様ドキュメントのさまざまな要素を定義するかもわかりません。 その後は、仕様を JSON または YAML 形式で (ソース エディターから内容をコピーして) ローカル ファイル システムにエクスポートし、バージョン管理システムにプッシュします。
 ====
 
-. The API Designer has been pre-deployed on OpenShift. Launch the API Designer by clicking on https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer]
-. Click on the *New API* button.
+. API Designer は OpenShift に事前にデプロイされています。https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer] をクリックして API デザイナーを起動します。
+. *New API* ボタンをクリックします。
 +
 image::api-designer-import-url.png[]
-* Click on the *Source Tab* on the *New API* page, and delete the entire content in the window. 
-** Note: Keep this tab open. You will be pasting the draft OpenAPI into this window.
+* *New API* ページの *Source* タブをクリックし、ウィンドウ内のコンテンツ全体を削除します。
+** Note: このタブを開いたままにしてください。 ドラフト OpenAPI をこのウィンドウに貼り付けます。
 +
 image::api-new-api.png[]
-. Click https://raw.githubusercontent.com/cloud-services-summit-connect-2022/product-catalog-api/main/openapi/openapi-spec.yml[here^] to view the draft OpenAPI .
-. Copy the entire contents from this webpage (Ctrl+A and Ctrl+C)
-. Now paste the copied content (the draft OpenAPI) from the above step into the API designer's *Source Tab* replacing all of the existing content. Click on *Save button* as highlighted in the screenshot below.
+. https://raw.githubusercontent.com/cloud-services-summit-connect-2022/product-catalog-api/main/openapi/openapi-spec.yml[ここ^] をクリックして、OpenAPI のドラフトを表示します。
+. この Web ページからコンテンツ全体をコピーします (Ctrl+A および Ctrl+C)
+. 次に、上記の手順でコピーしたコンテンツ (ドラフト OpenAPI) を API デザイナーの *Source* タブ に貼り付け、既存のコンテンツをすべて置き換えます。 下のスクリーンショットで強調表示されている *Save* ボタンをクリックします。
 +
 image::api-paste-api.png[]
-. Navigate back to the *Design Tab*
+. *Design* タブに戻ります。
 +
 image::api-design-tab.png[]
 
-. You can now view  the `Product Catalog API` on the browser. You can explore the Paths, Data Types and Responses that are part of this API.
+. これで、ブラウザ上で `Product Catalog API` を表示できるようになります。 この API の一部である Paths、Data Types 及び Responses を調べることができます。
 +
 image::api-designer-api-import-complete.png[]
 
-== Explore and edit the API 
-. Click on the `product-list` under the `Responses` section
-. Click on the `2 example(s) defined` link. You will see the list of examples given
+== API の探索と編集
+. `Responses` セクションの下の `product-list` をクリックします。
+. `2 example(s) defined` リンクをクリックします。 与えられた例のリストが表示されます
 +
 image::api-designer-product-list-response-eg-list.png[]
-. At the right-most side of the *Examples* table (scroll sideways), hover the mouse over the `product-list-with-inventory` example and click on the *Edit* button shown as a *pencil icon*. This opens the example's content.
+.  *Examples* テーブルの右端 (横にスクロール) で、`product-list-with-inventory` サンプルの上にマウスを置き、　*鉛筆* アイコンとして表示されている *Edit* ボタンをクリックします。 これにより、例のコンテンツが開きます。
 +
 image::api-click-edit.png[]
-. The example's content is displayed in the popup window.
+. 例の中身がポップアップ ウィンドウに表示されます。
 +
 image::api-designer-sample-original.png[]
-. Replace the name of the first product by adding your name. I've changed this from `Quarkus T-shirt` to `Jaya's Awesome Quarkus T-shirt`
-.. Make sure you click  on the *Edit* button to confirm your edits.
+. 最初の製品の名前に自分の名前を追加して置き換えます。 私の場合は `Quarkus T-shirt` から `Jaya's Awesome Quarkus T-shirt` に変更しました。
+.. 編集内容を確定するには、必ず *Edit* ボタンをクリックしてください。
 +
 image::api-designer-sample-updated.png[]
-. The changes made are now visible on the main screen. 
+. 加えられた変更がメイン画面に表示されます。
 +
 image::api-designer-sample-edit-complete.png[]
-* The OpenAPI specification is now ready to be downloaded. Click on the _down arrow_ button adjacent to *Save As..* and then choose *Save as JSON* button found on top-right of the page. The file gets saved automatically in the *Downloads folder* of your computer.
+* OpenAPI 仕様をダウンロードする準備ができました。ページの右上にある *Save As..*  の横にある下矢印をクリックし、 *Save as JSON* を選択します。 ファイルはあなたのコンピュータの *ダウンロード* フォルダに自動的に保存されます。
 +
 image::api-download-as-json.png[]
-* The Product Catalog OpenAPI spec is ready to be governed with a Service Registry.
+* 製品カタログ OpenAPI 仕様を、サービス レジストリで管理する準備ができました。
 
 
 [NOTE]
 ====
-With the API Designer all your designs are stored locally in your browser. Clearing your browser cache or switching to a new browser might result in loss of data. Make sure you save your work by downloading your designs locally or as described in the next step export them to a Red Hat Service Registry instance.
+API Designer では、すべてのデザインをブラウザからローカルに保存します。 ブラウザのキャッシュをクリアしたり、新しいブラウザに切り替えたりすると、データが失われる可能性があります。 デザインをローカルにダウンロードするか、次のステップで説明するように Red Hat Service Registry インスタンスにエクスポートして、作業内容を必ず保存してください。
 ====
 
 
 {empty} +
 
-You can close all the other browser tabs but this Instructions browser tab you are viewing. +
-In the next section, you will import this API spec and govern it with Red Hat Service Registry.
+この手順で使用しているブラウザ タブ以外の他のブラウザ タブはすべて閉じてかまいません。 +
+次のセクションでは、この API 仕様をインポートし、Red Hat Service Registry で管理します。
