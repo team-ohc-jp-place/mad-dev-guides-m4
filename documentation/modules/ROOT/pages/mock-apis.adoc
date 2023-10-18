@@ -5,7 +5,7 @@
 OpenAPI 仕様が完成したので、API モックの作成により、並列開発ストリームが可能になり、迅速な内部ループ開発が可能になります。
 
 * さまざまな開発チーム (モバイル開発など) は、API が完全に開発されるまで待つ必要はなく、代わりにこれらのモックを使用して現実的な応答を得ることができます。
-* バックエンド開発者は、https://quarkus.io/[Quarkus^, window=product-page] などの最新のクラウドネイティブ フレームワークを使用してバックエンド アプリケーション API を並行して構築します。
+* バックエンド開発者は、 https://quarkus.io/[Quarkus^, window=product-page] などの最新のクラウドネイティブ フレームワークを使用してバックエンド アプリケーション API を並行して構築します。
 
 microcks、postman など、API をモックする方法は数多くあります。このモジュールでは、OpenShift にデプロイされている Microcks を使用します。
 
@@ -71,7 +71,7 @@ image:mic-import-success.png[]
 image:mic-import-error.png[] 
 コンテンツの取得時にエラーが発生した場合は、Service Registry 内のスキーマに *ProductCatalogAPI* 以外の別の名前を指定したことを意味している可能性があります。
 ====
-. Navigate to the *APIs | Services* to view the API that has been successfully imported. Click on *Product Catalog API* link (highlighted in the screenshot below) *APIs | Services* に移動して、正常にインポートされた API を表示します。  *Product Catalog API* リンクをクリックします (下のスクリーンショットで強調表示されています)。
+. *APIs | Services* に移動して、正常にインポートされた API を表示します。  *Product Catalog API* リンクをクリックします (下のスクリーンショットで強調表示されています)。
 +
 image:mic-view-api.png[] 
 . インポートされた Product Catalog の詳細を表示する
