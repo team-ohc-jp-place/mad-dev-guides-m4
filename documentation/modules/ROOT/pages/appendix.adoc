@@ -1,15 +1,15 @@
 :imagesdir: ../assets/images
 
-== Appendix: Learn More
+== 付録: もっと詳しく知る
 
 [#3scale-definitions]
-=== What are Backend, Product, ActiveDocs and CRDs?
+=== Backend, Product, ActiveDocs と CRD とは何ですか?
 
 
-* *Backends* are Internal APIs which are then bundled into a 3scale Product. It contains at least the URL of the API. It can optionally be configured with mapping rules, methods and metrics to facilitate reusability.
-* *Products* are the Customer-facing APIs. It defines the application plans, and configure APIcast
-* *ActiveDocs* are interactive documentation for your API offered as a framework by 3scale. You can create API documentation by attaching the Product Catalog OpenAPI schema as a *3scale ActiveDoc*
-* A CRD file allows you to define your own object kinds (Backend, API, ActiveDoc etc) and lets the API Server handle the entire lifecycle of the objects.
+* *Backends* は 3scale 製品にバンドルされる内部 API です。 少なくとも API の URL が含まれます。 再利用を容易にするために、オプションで、マッピング ルール、メソッド、メトリックを使用して構成できます。
+* *Products* は顧客向け API です。 アプリケーション計画を定義し、APIcast を構成します。
+* *ActiveDocs* は、3scale によってフレームワークとして提供される API のインタラクティブなドキュメントです。 Product Catalog OpenAPI スキーマを *3scale ActiveDoc* として添付することで、API ドキュメントを作成できます。
+* CRD ファイルを使用すると、独自のオブジェクトの種類 (バックエンド、API、ActiveDoc など) を定義でき、API サーバーがオブジェクトのライフサイクル全体を処理できるようになります。
 
 << <<manage-apis.adoc#3scale-definitions, back to instructions>>
 
@@ -17,34 +17,34 @@
 
 
 [#openshift-service]
-=== What is a OpenShift/Kubernetes Service?
+=== OpenShift/Kubernetes サービスとは何ですか？
 
-In OpenShift, a Kubernetes Service serves as an internal load balancer and identifies pods which in turn have the applications. If the application needs to be accessed from outside of OpenShift, you will need OpenShift routes. +
-In this workshop, since both 3scale and the Product Catalog API run on OpenShift, 3scale will proxy requests to the backend using Services. This also means the backend cannot be accessed directly from outside OpenShift. 
+OpenShift では、Kubernetes Service が内部ロード バランサーとして機能し、アプリケーションを持つポッドを識別します。 アプリケーションに OpenShift の外部からアクセスする必要がある場合は、OpenShift ルートが必要になります。 +
+このワークショップでは、3scale と Product Catalog API の両方が OpenShift 上で実行されるため、3scale はサービスを使用してバックエンドにリクエストをプロキシします。 これは、OpenShift の外部からバックエンドに直接アクセスできないことも意味します。
 
-*Finding the Private endpoint of the Product Catalog service deployed on OpenShift*
+*OpenShift にデプロイされた Product Catalog サービスのプライベート エンドポイントの検索*
 
-* In a browser window, navigate to the console of the lab OpenShift cluster at link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[Topology view^,role=external,window=_blank]. 
+* ブラウザウィンドウで、 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[Topology view^,role=external,window=_blank] からあるラボの OpenShift クラスターのコンソールに移動します。
 
 
-* Login with your username and password (`%USERID%/openshift`). Open the *Developer* perspective in the *globex-%USERID%* namespace.
-* Click on the `*catalog icon*` to see the deployment details appear on the right-hand. Under the *Resources* tab, click on *catalog* Service as indicated in the screenshot above.
+* ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-%USERID%* namespace で *Developer* パースペクティブを開きます。
+* `*catalog icon*` をクリックすると、右側に deployment の詳細が表示されます。 下のスクリーンショットに示されているように、 *Resources* タブで *catalog* サービスをクリックします。
 +
 image::apim-catalog-service.png[]
-* You will be navigated to the Service Details page of the *catalog* service. Copy the *Hostname* highlighted in the screenshot below
+* *catalog* サービスのサービス詳細ページに移動します。 下のスクリーンショットで強調表示されている  *Hostname* をコピーします。
 +
 image::apim-catalog-service-details.png[]
 +
-This would look something like this: `catalog.globex-%USERID%.svc.cluster.local`
-* This hostname is used as the *Private endpoint* while creating the Backend.
+これは次のようになります: `catalog.globex-%USERID%.svc.cluster.local`
+* このホスト名は、Backendの作成中に *Private endpoint* として使用されます。
 
 << <<manage-apis.adoc#create-backend, back to instructions>>
 
 ---
 
 [#apicast]
-=== What is APIcast?
+=== APIcast とは何ですか？
 
-APIcast is an NGINX based API gateway used to integrate your internal and external API services with the Red Hat 3scale Platform. In this workshop we use the two built-in APICast (staging and production) that come by default with the 3scale installation. They come pre-configured and ready to use out-of-the-box. +
+APIcast は、内部および外部の API サービスを Red Hat 3scale プラットフォームと統合するために使用される NGINX ベースの API ゲートウェイです。 このワークショップでは、3scale のインストールでデフォルトで付属する 2 つの組み込み APICast (ステージングとプロダクション) を使用します。 これらは事前に構成されており、すぐに使用できる状態になっています。 +
 
 << <<manage-apis.adoc#apicast, back to instructions>>
