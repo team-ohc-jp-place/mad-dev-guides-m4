@@ -1,39 +1,39 @@
 :imagesdir: ../assets/images
 
-= Setting up mocks to help with parallel development
+= 並行開発を支援するためのモックのセットアップ
 
-Now that the OpenAPI specs are finalised, creation of API mocks will enable parallel development streams leading to rapid inner loop development. 
+OpenAPI 仕様が完成したので、API モックの作成により、並列開発ストリームが可能になり、迅速な内部ループ開発が可能になります。
 
-* The various  dev teams (such as mobile dev) do not need to wait for the APIs to be completely developed and instead can use these mocks to get realistic responses. 
-* Backend developers in parallel build the backend applications APIs using modern cloud-native frameworks such as https://quarkus.io/[Quarkus^, window=product-page]. 
+* さまざまな開発チーム (モバイル開発など) は、API が完全に開発されるまで待つ必要はなく、代わりにこれらのモックを使用して現実的な応答を得ることができます。
+* バックエンド開発者は、https://quarkus.io/[Quarkus^, window=product-page] などの最新のクラウドネイティブ フレームワークを使用してバックエンド アプリケーション API を並行して構築します。
 
-There are a number of ways to mock APIs including microcks, postman etc. In this module, you will use Microcks which has been deployed on OpenShift already.
+microcks、postman など、API をモックする方法は数多くあります。このモジュールでは、OpenShift にデプロイされている Microcks を使用します。
 
-== Goals of this lab
-* Import the Product Catalog API from Service Registry 
-* Test the imported API using the mock server and look for the change made to one of the examples in the API Designer
+== このラボの目標
+* サービス レジストリから Product Catalog API をインポートする
+* モック サーバーを使用してインポートされた API をテストし、 API Designer でサンプルの 1 つに加えられた変更を探します。
 
 
-== Import the Product Catalog API
+== Product Catalog APIのインポート
 
 [NOTE]
 
-Microcks has been set up in dev-mode within OpenShift globex-apim-%USERID% namespace. 
+Microcks は、OpenShift のglobex-apim-%USERID% namespace に開発モードでセットアップされています。
 
 
-. Launch https://microcks-globex-apim-%USERID%.%SUBDOMAIN%/[microcks^] 
+. https://microcks-globex-apim-%USERID%.%SUBDOMAIN%/[microcks^] に接続
 +
 [NOTE]
 ====
-Microcks has been setup in developer-mode without authentication only for the purpose of this workshop. You can access the deployment from the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console]. If required, login with your username and password (`%USERID%/openshift`). 
+Microcks は、このワークショップのみを目的として、認証なしで開発者モードでセットアップされています。  link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] からデプロイメントにアクセスできます。必要に応じてユーザー名/パスワードを使用してログインします。 (`%USERID%/openshift`)
 ====
-. Click on the *Importers* button as show in the screenshot below
+. 以下のスクリーンショットに示すように、 *Importers* ボタンをクリックします。
 +
 image::mic-landing.png[]
-. You will be presented with the *Import Jobs* page. Click *+Create* button.
+. *Import Jobs* ページが表示されます。  *+Create* ボタンをクリックします。
 +
 image:mic-create.png[] 
-. In the *Create a new Job* wizard - *Step 1: Importer Job properties*, fill in the following details as shown in the screenshot below, and click *Next>* button. +
+. *Create a new Job* ウィザード -  *Step 1: Importer Job properties*  で、以下のスクリーンショットに示すように詳細を入力し、 *Next>* ボタンをクリックします。 +
 * *Name*: 
 +
 [.console-input]
@@ -53,47 +53,47 @@ image:mic-create-job.png[]
 +
 [NOTE]
 ====
-The Repository URL that you provided is the OpenAPI Schema's URL from Service Registry that you setup in the previous step. 
+指定するリポジトリ URL は、前の手順で設定した Service Registory からの OpenAPI Schema の URL です。
 ====
-. Since there is no Authentication secret to be provided, click *Next >* in *Step 2 - Authentication options*
+. 提供すべき認証シークレットがないため、 *Step 2 - Authentication options* はそのまま *Next >* をクリックします。
 +
 image:mic-create-job-step2.png[] 
-. You can choose to provide a label in the *Labels* step. But since this is not mandatory or relevant to this exercise, you can simply choose to click *Next >* in the *Step 3 - Labels*
+. *Step 3 - Labels* *Labels* ステップでラベルを指定することを選択できます。 ただし、これは必須ではなく、この演習に関連するものでもないため、 *Step 3 - Labels* も *Next >* をクリックするだけで済みます。
 image:mic-create-job-step3.png[] 
-. Click *Create* in the *Step 4 - Review* step of this wizard 
+. ウィザードの  *Create* in the *Step 4 - Review* ステップで *Create* をクリックします。
 image:mic-create-job-step4.png[] 
-. You would be able to view the Product Catalog API that you imported being listed as shown below. Take special note of the labels as highlighted. If you see an *Error* label, refer to the note shown below
+. 以下に示すように、インポートした Product Catalog API がリストされていることを確認できます。 強調表示されているラベルに特に注意してください。  *Error* ラベルが表示された場合は、以下の Caution を参照してください。
 +
 image:mic-import-success.png[] 
 +
 [CAUTION]
 ====
 image:mic-import-error.png[] 
-If there is an error in fetching the content, this could mean that you had provided a different name to the schema within Service Registry other than *ProductCatalogAPI*
+コンテンツの取得時にエラーが発生した場合は、Service Registry 内のスキーマに *ProductCatalogAPI* 以外の別の名前を指定したことを意味している可能性があります。
 ====
-. Navigate to the *APIs | Services* to view the API that has been successfully imported. Click on *Product Catalog API* link (highlighted in the screenshot below)
+. Navigate to the *APIs | Services* to view the API that has been successfully imported. Click on *Product Catalog API* link (highlighted in the screenshot below) *APIs | Services* に移動して、正常にインポートされた API を表示します。  *Product Catalog API* リンクをクリックします (下のスクリーンショットで強調表示されています)。
 +
 image:mic-view-api.png[] 
-. View the details of the imported Product Catalog
-. Click on the arrow *>* against the first operation *GET /services/product/list/{ids}* to view the details of this operation. 
-** You may note that this operation holds the example that you had edited to include your name :)
+. インポートされた Product Catalog の詳細を表示する
+. *GET /services/product/list/{ids}* に対する矢印 *>* をクリックして、この操作の詳細を表示します。
+** この操作では、自分の名前を含めるように編集した例が保持されていることに注意してください :)
 +
 image:mic-view-api-details.png[] 
-. You will now be able to see the Mock URL, the response code and other details for this specific operation
-. Copy the Mock URL by clicking on the *Copy icon* shown in the Mock tab named *product-list-with-inventory*. Refer to the screenshot below.
+. この特定の操作のモック URL、応答コード、その他の詳細を確認できます。
+. *product-list-with-inventory* という名前の Mock タブで *Copy icon*  をクリックして、モック URL をコピーします。 以下のスクリーンショットを参照してください。
 +
 [CAUTION]
 ====
-The order in which the Mocks are displayed could be different from the screenshot. So ensure you are choosing *product-list-with-inventory* and not the *product-list-without-inventory*
+モックが表示される順序はスクリーンショットと異なる場合があります。  *product-list-without-inventory* ではなく、 *product-list-with-inventory* を選択していることを確認してください。
 ====
 +
 image:mic-view-api-operation1.png[] 
-. Open a new browser tab, and navigate to the Mock URL you copied in the above step.
-. You can view the list of products from the example of the Mock. Note that the name of the Quarkus T-shirt now says `Jaya's Awesome Quarkus T-shirt` (or the name you have for this product)
+. 新しいブラウザー タブを開き、上記の手順でコピーしたモック URL に移動します。
+. モックの例から製品のリストを表示できます。 Quarkus T-shirt の名前が Jaya’s Awesome Quarkus T-shirt (またはあなたがこの製品に対して設定した名前) になっていることに注意してください。
 +
 image:mic-final-mock.png[] 
-. These mock end points of the mock server can be used by the dev teams that are dependent on the APIs, to continue development in parallel without having to wait for the backend services to be fully developed, thereby accelerating time to market.
+. API に依存する開発チームは、モック サーバーのこれらのモック エンド ポイントを使用して、バックエンド サービスが完全に開発されるのを待たずに並行して開発を続けることができるため、市場投入までの時間を短縮できます。
 
 
-Go ahead and close all the other browser tabs but this Instructions browser tab you are viewing. +
-In the next step, you will learn to protect the API by using Red Hat 3scale API Management. 
+表示しているこの手順ブラウザ タブ以外の他のブラウザ タブをすべて閉じて、先に進みます。 +
+次のステップでは、Red Hat 3scale API Management を使用して API を保護する方法を学習します。
