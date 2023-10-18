@@ -24,11 +24,11 @@ OpenShift では、Kubernetes Service が内部ロード バランサーとし�
 
 *OpenShift にデプロイされた Product Catalog サービスのプライベート エンドポイントの検索*
 
-* ブラウザウィンドウで、 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[Topology view^,role=external,window=_blank] からあるラボの OpenShift クラスターのコンソールに移動します。
+* ブラウザウィンドウで、 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[Topology view^,role=external,window=_blank] からラボの OpenShift クラスターのコンソールに移動します。
 
 
 * ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-%USERID%* namespace で *Developer* パースペクティブを開きます。
-* `*catalog icon*` をクリックすると、右側に deployment の詳細が表示されます。 下のスクリーンショットに示されているように、 *Resources* タブで *catalog* サービスをクリックします。
+* `*catalog*` のアイコンをクリックすると、右側に deployment の詳細が表示されます。 下のスクリーンショットに示されているように、 *Resources* タブで *catalog* サービスをクリックします。
 +
 image::apim-catalog-service.png[]
 * *catalog* サービスのサービス詳細ページに移動します。 下のスクリーンショットで強調表示されている  *Hostname* をコピーします。
