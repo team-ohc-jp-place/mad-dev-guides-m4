@@ -1,51 +1,51 @@
 :imagesdir: ../assets/images
 
-= Adding API Management capabilities to the application
+= API Management 機能をアプリケーションに追加する
 
-== Introduction
+== 導入
 
-Once the backend teams fully develop the APIs backends, the APIs can be published for external consumption with an API management platform. Globex uses https://www.redhat.com/en/technologies/jboss-middleware/3scale[Red Hat 3scale API Management,role=external,window=product_page] for managing these APIs. The external teams such as the mobile team will be able to use the built-in developer portal of 3scale to sign up for various application plans. 
+バックエンド チームが API バックエンドを完全に開発したら、API 管理プラットフォームを使用して API を外部利用向けに公開できます。 Globex は、これらの API の管理に  https://www.redhat.com/en/technologies/jboss-middleware/3scale[Red Hat 3scale API Management,role=external,window=product_page] を使用します。モバイル チームなどの外部チームは、3scale の組み込み開発者ポータルを使用して、さまざまなアプリケーション プランにサインアップできるようになります。
 
-== Goals of this lab
-In this part of the workshop you will 
+== このラボの目標
+このパートでは、次のことを行います。
 
-* Launch the 3scale tenant which has been created for you
-* Manage and secure the predeployed Product Catalog API with 3scale
-* Test secure access of the Product Catalog API
-* View the traffic analytics generated
+* 作成された 3scale テナントを起動します
+* 3scale を使用して、事前デプロイされた Product Catalog API を管理および保護する
+* Product Catalog API の安全なアクセスをテストする
+* 生成されたトラフィック分析を表示する
 
-== Access 3scale
-. Navigate to https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] to launch the 3scale tenant created for you.
-. Login with your username and password (`%USERID%/openshift`)
+== 3scaleにアクセス
+. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] に移動して、作成された 3scale テナントにアクセスします。
+. ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。
 +
 image:3scale-login.png[] 
-. Notice than a sample API which has been already set up. You will not be using this but will be creating a new one for this workshop for the *Product Catalog API* that you've been working on so far.
+. サンプル API がすでにセットアップされていることに注目してください。 これは使用しませんが、これまでにこのワークショップで取り組んできた *Product Catalog API*  用に新しいものを作成します。
 +
 image:3scale-landing-page.png[]
 
 
 [#3scale-definitions]
-== Create Mobile Gateway Backend, Product and ActiveDoc on 3scale
+== 3scale でモバイル ゲートウェイ バックエンド、ProductとActiveDoc を作成する
 
-To integrate and manage the Product Catalog API in 3scale, you need to create Products and Backend. 
+3scale でProduct Catalog API を統合して管理するには、Product と Backend を作成する必要があります。
 
-In this lab you will declare the 3scale assets like Product and Backend as Kubernetes Custom Resources. The Custom Resources are detected by the 3scale operator which applies and synchronizes the Custom Resources (CRDs) on the 3scale platform.
+このラボでは、製品やバックエンドなどの 3scale アセットを Kubernetes カスタム リソースとして宣言します。 カスタム リソースは、3scale プラットフォームにカスタム リソース (CRD) を適用して同期する 3scale オペレーターによって検出されます。
 
-Note: <<appendix.adoc#3scale-definitions, Click to learn more about Backends, Products, ActiveDocs and CRDs>>
+Note: <<appendix.adoc#3scale-definitions, Backends、Products、ActiveDocs、CRD の詳細を確認してください>>
 
 [#create-backend]
-=== Create 3scale Backend
+=== 3scale バックエンドの作成
 
-To create the Backend for Product Catalog API Gateway, you will need the Service URL of Product Catalog deployment which is already running on OpenShift. +
+Product Catalog API API ゲートウェイのバックエンドを作成するには、OpenShift 上ですでに実行されている Product Catalog デプロイメントのサービス URL が必要です。 +
 
-Note: <<appendix.adoc#openshift-service, Click to learn more about OpenShift/Kubernetes Service and how to find it>>
+Note: <<appendix.adoc#openshift-service, OpenShift/Kubernetes Service とその検索方法>>
 
-. Navigate to the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console]. If required, login with your username and password (`%USERID%/openshift`). Open the *Developer* perspective in the *globex-apim-%USERID%* 
-. On the OpenShift console, click on the image:console-import-yaml.png[] icon in the top menu on the right. This opens an editor where you can enter a Kubernetes resource definition in YAML format.
+.　link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] に移動します。 必要に応じて、ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-apim-%USERID%* namespaceで *Developer* パースペクティブを開きます。
+. OpenShift コンソールで、右側の上部メニューにある image:console-import-yaml.png[] アイコンをクリックします。 これにより、YAML 形式で Kubernetes リソース定義を入力できるエディターが開きます。
 +
 image:apim-openshift-import.png[]
 +
-.. Paste the following *Backend* 3scale Custom Resource in the editor.
+.. *Backend* 3scale カスタム リソースをエディターに貼り付けます。
 +
 [.console-input]
 [source,yaml]
@@ -76,15 +76,15 @@ spec:
 +
 image:apim-create-backend-cr.png[] 
 +
-.. Click *Create* to create the 3scale Backend resource. The 3scale operator creates the Backend resource in your 3scale tenant. 
-.. You are shown the *Backend details* page. Note under the *Conditions* section at the bottom of the page, the Type *Synced* is set with Status as *True*
+.. *Create* をクリックして 3scale バックエンド リソースを作成します。 3scale オペレーターは、3scale テナントにバックエンド リソースを作成します。
+.. *Backend details* ページが表示されます。 ページ下部の　*Conditions* セクションで、タイプ  *Synced* が設定され、ステータスが *True* であることに注意してください。
 +
 image:apim-create-backend-details.png[] 
-. Click on https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] to view the backend created for you.
+. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] をクリックして、作成されたバックエンドを表示します。
 +
 image:apim-backend-created.png[] 
 +
-.. Click on the Backend *Globex Product Catalog Backend* link to view the Backend overview page.
+.. *Globex Product Catalog Backend* リンクをクリックして、 Backend overview ページを表示します。
 +
 image:apim-backend-overview.png[] 
 
@@ -92,12 +92,13 @@ image:apim-backend-overview.png[]
 ---
 
 [#3scale-product]
-=== Create 3scale Product and ActiveDocs
+=== 3scale Products と ActiveDocs を作成する
 The next step is to create a 3scale Product, Application Plans for the Product, and also ActiveDocs for the Product Catalog API
 
-. Navigate to the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[OpenShift Console^,role=external,window=console]. 
-. On the OpenShift console, click on the image:console-import-yaml.png[] icon in the top menu on the right. This opens an editor where you can enter a Kubernetes resource definition in YAML format.
-.. Paste the following *Product and ActiveDoc* 3scale Custom Resource in the editor.
+. link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[OpenShift Console^,role=external,window=console] に移動します。
+. OpenShift コンソールで、右側の上部メニューにある image:console-import-yaml.png[] アイコン
+をクリップします。これにより、YAML 形式で Kubernetes リソース定義を入力できるエディターが開きます。
+.. 以下を *Product and ActiveDoc* 3scale カスタム リソースをエディターに貼り付けます。
 +
 [.console-input]
 [source,yaml]
@@ -143,60 +144,60 @@ spec:
 ----
 +
 image:apim-prod-activedoc-cr.png[] 
-.. Click *Create* to create the 3scale resources, and the 3scale operator creates these resources in your 3scale tenant
+.. *Create* をクリックして 3scale リソースを作成すると、3scale オペレーターがこれらのリソースを 3scale テナントに作成します。
 +
 image:apim-prod-activedoc-created.png[]
-. Click on https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] to view the Product and ActiveDoc created for you
+. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] をクリックして、作成された Product と ActiveDoc を表示します。
 +
 image:apim-prod-created.png[] 
-. Click on the Product *Globex Product Catalog* link to view the overview page. Note that the *Backends* and the *Published Application Plans* that you created have been attached to the Product.
+. Product *Globex Product Catalog* リンクをクリックして、概要ページを表示します。 作成した  *Backends* と *Published Application Plans* が Product にアタッチされていることに注意してください。
 +
 image:apim-prod-overview.png[] 
 
 +
-. Click on *ActiveDocs* link on the left hand navigation
+. 左側のナビゲーションにある *ActiveDocs* リンクをクリックします。
 +
 image:apim-prod-activedocs.png[] 
 +
-.. Click on the *globex-product-catalog-activedoc* ActiveDoc to view the API
+.. *globex-product-catalog-activedoc* ActiveDoc をクリックして API を表示します。
 +
 image:apim-activedoc-view.png[]
 
 [#apicast]
-. Before you can start accessing the Product Catalog API, you must promote the APIcast configuration as below. +
+. Product Catalog API へのアクセスを開始する前に、以下のように APIcast Configuration をプロモートする必要があります。 +
 +
-Note: <<appendix.adoc#apicast, Click to learn more about APIcast>>
+Note: <<appendix.adoc#apicast, APIcast とは何ですか？>>
 
-. From https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale homepage^,window=3scale], under the Products section, click on *Globex Product Catalog* to view the Product's overview page.
-. From the left hand menu, navigate to *Integration* > *Configuration*
+. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale homepage^,window=3scale] の Products セクションで、 *Globex Product Catalog* をクリックして Product の概要ページを表示します。
+. 左側のメニューから、 *Integration* > *Configuration* を選択します。
 +
 image:apim-prod-integ-config.png[]
-. Under *APIcast Configuration*, click *Promote to v.x Staging APICast* to promote the APIcast configurations.
+.  *APIcast Configuration* で、 *Promote to v.x Staging APICast* をクリックして APIcast Configuration をプロモートします。
 +
 image::apim-promote-staging.png[]
-. Similarly click *Promote to v.x Production APICast* 
+. 同様に、 *Promote to v.x Production APICast* をクリックします。
 +
 image::apim-promote-prod.png[]
 
 
-== Create an Application for the default account
+== デフォルトアカウントのアプリケーションを作成する
 
-. Navigate to https://3scale-%USERID%-admin.apps.cluster-vxhmd.sandbox1011.opentlc.com/buyers/accounts[Audience section^, window=3scale] of 3scale from the the top menu bar
+. 上部のメニュー バーから 3scale の  https://3scale-%USERID%-admin.apps.cluster-vxhmd.sandbox1011.opentlc.com/buyers/accounts[Audience section^, window=3scale] に移動します。
 +
 image:apim-audeince-menu.png[] 
-. You will be shown the *Accounts > Listing* page showing a default *Developer* account that has already been created.
+.  *Accounts > Listing* ページが表示され、すでに作成されているデフォルトの *Developer*  アカウントが表示されます。
 +
 image:apim-developer-account.png[]
-. Click on *Developer* to view the Developer Account details. 
-.. Click on the *+++<u>1 Application</u>+++* link on the top of the page
+.  *Developer* をクリックして、Developer アカウントの詳細を表示します。
+.. ページ上部の *+++<u>1 Application</u>+++* リンクをクリックします。
 +
 image:apim-dev-acc-details.png[]
-. The existing list of applications associated with this Developer user is displayed. 
-.. Note that there is already a default application which has been associated with this user. 
-.. Click *Create Application* button
+. この Developer ユーザーに関連付けられているアプリケーションの既存のリストが表示されます。
+.. このユーザーに関連付けられているデフォルトのアプリケーションがすでに存在することに注意してください。
+.. *Create Application* ボタンをクリックします。
 +
 image:apim-create-app.png[]
-. Choose/Enter the following details in the *Create Application* page:
+. *Create Application* ページで次の詳細を選択/入力します。
 * Product
 +
 [.console-input]
@@ -228,88 +229,87 @@ Globex Product Catalog - Basic App
 
 +
 image:apim-new-app-data.png[]
-. Click the *Create Application* button.
-. You can see the *product-catalog-basic* application details now as shown below.
+. *Create Application* ボタンをクリックします。
+. 以下に示すように、*product-catalog-basic* アプリケーションの詳細が表示されます。
 +
 image:apim-create-app-success.png[]
-. Make a note of the `User Key` that is displayed under the *API Credentials* section as highlighted in the above screenshot. This will be used while making calls to the API.
-
+. 上のスクリーンショットで強調表示されている、*API Credentials* セクションの下に表示される `User Key` をメモします。 これは、API を呼び出すときに使用されます。
 [NOTE]
 ====
-Note: In real life, developers will create Applications from the integrated 3scale Developer Portal.
+Note: 実際には、開発者は統合された 3scale 開発者ポータルからアプリケーションを作成します。
 ====
 
 {empty}
 
 ---
 
-== Test Product Catalog API Access
+==  Product Catalog API アクセスのテスト
 
-To test the secure access of this API, you will use a simple Angular application which reads from the Product Catalog API endpoint and displays it on the browser.
+この API の安全なアクセスをテストするには、Product Catalog API エンドポイントから読み取りブラウザーに表示する、単純な Angular アプリケーションを使用します。
 
-. Navigate to the link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console,role=external,window=console] to access the *globex-apim-%USERID%* namespace in it.
-. Click on the *Open URL* icon highlighted in the screenshot below to view the Angular mobile application.
+. link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console,role=external,window=console] に移動して、*globex-apim-%USERID%* namespace にアクセスします。
+. Angular モバイル アプリケーションを表示するには、下のスクリーンショットで強調表示されている *Open URL* アイコンをクリックします。
 +
 image:apim-launch-mobile.png[]
-. You will see an empty page because the application is not configured to talk to the Product Catalog API yet. In the next steps you will configure the app to connect with the Product Catalog API.
+. アプリケーションはまだ Product Catalog API  と通信するように構成されていないため、空のページが表示されます。 次の手順では、Product Catalog API に接続するようにアプリを構成します。
 +
 image:apim-mobile-empty.png[]
-. From the OpenShift console that you have already opened, click on *globex-mobile* as highlighted below to view the *Deployment* details.
+. すでに開いている OpenShift コンソールから、以下で強調表示されている *globex-mobile* をクリックして、 *Deployment* の詳細を表示します。
 +
 image:apim-namespace.png[]
-. In the deployment panel, click on the Deployment *globex-mobile* to navigate to the Deployment details page.
+. deployment パネルで、Deployment *globex-mobile* をクリックして、Deployment details ページに移動します。
 +
 image:apim-mobile-deployment-panel.png[]
-. Click on the *Environment* tab from the Deployment details page.
+. Deployment details ページで *Environment* タブをクリックします。
 +
 image:apim-mobile-deployment-details.png[]
-. Note that there are two variables with values `replace-me`. You will need to update these variables which will need to be fetched from 3scale. +
-. Update the 2 placeholders as instructed below
+.  `replace-me` という値を持つ変数が 2 つあることに注意してください。 3scale がフェッチする必要があるこれらの変数を更新する必要があります。 +
+. 以下の指示に従って 2 つのプレースホルダーを更新します。
 +
 image:apim-mobile-env.png[]
-. *GLOBEX_PRODUCT_CATALOG_API*: We will use the Staging APICast URL of the *Globex Product Catalog* created in 3scale. 
-* Launch https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale], and click on *Globex Product Catalog* link to view the Product Details
-* Next navigate to *Integration > Configuration* from the left hand navigation, and copy the URL show under *Staging APIcast* section
+. *GLOBEX_PRODUCT_CATALOG_API*: 3scale で作成された *Globex Product Catalog* のステージング APICast URL を使用します。
+* https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale] に移動し、 *Globex Product Catalog* リンクをクリックして Product の詳細を表示します。
+* 次に、左側のナビゲーションから *Integration > Configuration* に移動し、 *Staging APIcast* セクションに表示されている URL をコピーします。
 +
 image:apim-staging-url.png[]
 +
-* Paste the URL copied in the above step into the globex-mobile Deployment's Environment variable *GLOBEX_PRODUCT_CATALOG_API*
+* 上記の手順でコピーした URL を、globex-mobile Deployment の環境変数 *GLOBEX_PRODUCT_CATALOG_API* に貼り付けます。
 +
 image:apim-staging-url-pasted.png[]
-. *USER_KEY*: This is the API Credentials that you were provided when you signed up for an Application Plan
-** Click https://3scale-%USERID%-admin.%SUBDOMAIN%/p/admin/applications[Applications^,window=3scale] to view the list *Applications for Developer* account, and click on *product-catalog-basic* application.
+. *USER_KEY*: これは、アプリケーション プランにサインアップしたときに提供された API 認証情報です。
+** https://3scale-%USERID%-admin.%SUBDOMAIN%/p/admin/applications[Applications^,window=3scale] をクリックして *Applications for Developer*  アカウントのリストを表示し、 *product-catalog-basic* アプリケーションをクリックします。
 +
 image:apim-developer-applications.png[]
-** Copy the *User Key* as show in this page
+** このページに示されているように *User Key* をコピーします。
 +
 image:apim-user-key-var.png[]
-** Paste this into the Deployment Environment variable *USER_KEY*
+** これを Deployment の環境変数 *USER_KEY* に貼り付けます。
 +
 image:apim-user-key-pasted.png[]
-. The globex-mobile Deployment's Environment values should look similar to this. Click on *Save* button at the bottom of the page. 
+. globalx-mobile Deployment の環境値は次のようになります。 ページの下部にある *Save*  ボタンをクリックします。
 +
 image:apim-mobile-env-complete.png[]
 
-. A new pod will be automatically created with the new endpoint and user_key, and the application is ready to be tested. 
-.. Click on the Pod tab to view the creation of a new pod. You will need to be quick or you may miss the pod creation :)
+. 新しいエンドポイントと user_key を使用して新しいポッドが自動的に作成され、アプリケーションをテストする準備が整います。
+.. Pod タブをクリックして、新しいポッドの作成を確認します。 素早く行う必要があり、そうしないとポッドの作成を見逃してしまう可能性があります:)
 +
 image:apim-mobile-new-pod.png[]
-. Launch https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] to view the products in a browser. It may take a couple of seconds for the data to load.
+. https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] に移動して、ブラウザで製品を表示します。 データのロードには数秒かかる場合があります。
 +
 image:apim-mobile-browser-view.png[]
 
 
-== View Traffic Analytics
-. Refresh the https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] page a few times to generate traffic.
-. Navigate to https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale], and click on *globex-product-catalog-product* to view the Product Details
-. Click on the *Analytics -> Traffic* link on the left hand side menu. You will see the *Hits* details. 
-. This section provides insights in terms of the number of hits for the product and other traffic analysis details as well.
+== トラフィック分析の表示
+. https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] page を２、３回リフレッシュして、トラフィックを発生させます。
+. Navigate to https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale] に移動し、 *globex-product-catalog-product* をクリックして Product の詳細を表示します。
+. 左側のメニューで *Analytics -> Traffic* リンクをクリックします。  *Hits* の詳細が表示されます。
+. このセクションでは、Product のヒット数やその他のトラフィック分析の詳細に関する洞察も提供します。
 +
 image:apim-traffic.png[]
  
 
 == Summary
 
-Congratulations! You have reached the end of the *Manage and secure APIs with OpenShift API Management* module of this workshop. You learnt about the various aspects of API Lifecycle management using a gamut of technologies including Red Hat build of Apicurio Registry, Red Hat 3scale API Management, Apicurio design and Microcks. 
+おめでとうございます！ このワークショップの *OpenShift API Management を使用した API の管理とセキュリティ保護* モジュールは終了しました。 Red Hat build of Apicurio Registry、 Red Hat 3scale API Management、Apicurio design や Microcks など、あらゆるテクノロジーを使用した API ライフサイクル管理のさまざまな側面について学びました。
 
-To learn more about click https://developers.redhat.com/topics/api-management[API Management, window=_blank]
+さらに知りたい場合は、 https://developers.redhat.com/topics/api-management[API Management, window=_blank] を参照してください。
