@@ -31,7 +31,7 @@ image:3scale-landing-page.png[]
 
 このラボでは、製品やバックエンドなどの 3scale アセットを Kubernetes カスタム リソースとして宣言します。 カスタム リソースは、3scale プラットフォームにカスタム リソース (CRD) を適用して同期する 3scale オペレーターによって検出されます。
 
-Note: <<appendix.adoc#3scale-definitions, Backends、Products、ActiveDocs、CRD の詳細を確認してください>>
+Note: <<appendix.adoc#3scale-definitions, Backends、Products、ActiveDocs、CRD の詳細>>
 
 [#create-backend]
 === 3scale バックエンドの作成
@@ -93,7 +93,7 @@ image:apim-backend-overview.png[]
 
 [#3scale-product]
 === 3scale Products と ActiveDocs を作成する
-The next step is to create a 3scale Product, Application Plans for the Product, and also ActiveDocs for the Product Catalog API
+次のステップでは、3scale Product、Application Plans for the Product　および Product Catalog API の ActiveDocs を作成します。
 
 . link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[OpenShift Console^,role=external,window=console] に移動します。
 . OpenShift コンソールで、右側の上部メニューにある image:console-import-yaml.png[] アイコン
