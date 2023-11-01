@@ -29,7 +29,7 @@ image:3scale-landing-page.png[]
 
 3scale でProduct Catalog API を統合して管理するには、Product と Backend を作成する必要があります。
 
-このラボでは、製品やバックエンドなどの 3scale アセットを Kubernetes カスタム リソースとして宣言します。 カスタム リソースは、3scale プラットフォームにカスタム リソース (CRD) を適用して同期する 3scale オペレーターによって検出されます。
+このラボでは、Productsやバックエンドなどの 3scale アセットを Kubernetes カスタム リソースとして宣言します。 カスタム リソースは、3scale プラットフォームにカスタム リソース (CRD) を適用して同期する 3scale オペレーターによって検出されます。
 
 Note: <<appendix.adoc#3scale-definitions, Backends、Products、ActiveDocs、CRD の詳細>>
 
@@ -38,7 +38,7 @@ Note: <<appendix.adoc#3scale-definitions, Backends、Products、ActiveDocs、CRD
 
 Product Catalog API API ゲートウェイのバックエンドを作成するには、OpenShift 上ですでに実行されている Product Catalog デプロイメントのサービス URL が必要です。 +
 
-Note: <<appendix.adoc#openshift-service, OpenShift/Kubernetes Service とその検索方法>>
+Note: <<appendix.adoc#openshift-service, OpenShift / Kubernetes Service の詳細とその検索方法>>
 
 .　link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] に移動します。 必要に応じて、ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-apim-%USERID%* namespaceで *Developer* パースペクティブを開きます。
 . OpenShift コンソールで、右側の上部メニューにある image:console-import-yaml.png[] アイコンをクリックします。 これにより、YAML 形式で Kubernetes リソース定義を入力できるエディターが開きます。
@@ -76,7 +76,7 @@ spec:
 +
 image:apim-create-backend-cr.png[] 
 +
-.. *Create* をクリックして 3scale バックエンド リソースを作成します。 3scale オペレーターは、3scale テナントにバックエンド リソースを作成します。
+.. *Create / 作成済み* をクリックして 3scale バックエンド リソースを作成します。 3scale オペレーターは、3scale テナントにバックエンド リソースを作成します。
 .. *Backend details* ページが表示されます。 ページ下部の　*Conditions* セクションで、タイプ  *Synced* が設定され、ステータスが *True* であることに注意してください。
 +
 image:apim-create-backend-details.png[] 
@@ -144,7 +144,7 @@ spec:
 ----
 +
 image:apim-prod-activedoc-cr.png[] 
-.. *Create* をクリックして 3scale リソースを作成すると、3scale オペレーターがこれらのリソースを 3scale テナントに作成します。
+.. *Create / 作成済み* をクリックして 3scale リソースを作成すると、3scale オペレーターがこれらのリソースを 3scale テナントに作成します。
 +
 image:apim-prod-activedoc-created.png[]
 . https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] をクリックして、作成された Product と ActiveDoc を表示します。
@@ -166,9 +166,9 @@ image:apim-activedoc-view.png[]
 [#apicast]
 . Product Catalog API へのアクセスを開始する前に、以下のように APIcast Configuration をプロモートする必要があります。 +
 +
-Note: <<appendix.adoc#apicast, APIcast とは何ですか？>>
+Note: <<appendix.adoc#apicast, APIcast の詳細>>
 
-. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale homepage^,window=3scale] の Products セクションで、 *Globex Product Catalog* をクリックして Product の概要ページを表示します。
+. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale] の Products セクションで、 *Globex Product Catalog* をクリックして Product の概要ページを表示します。
 . 左側のメニューから、 *Integration* > *Configuration* を選択します。
 +
 image:apim-prod-integ-config.png[]
@@ -182,7 +182,7 @@ image::apim-promote-prod.png[]
 
 == デフォルトアカウントのアプリケーションを作成する
 
-. 上部のメニュー バーから 3scale の  https://3scale-%USERID%-admin.apps.cluster-vxhmd.sandbox1011.opentlc.com/buyers/accounts[Audience section^, window=3scale] に移動します。
+. 上部のメニュー バーから 3scale の  https://3scale-%USERID%-admin.%SUBDOMAIN%/buyers/accounts[Audience section^, window=3scale] に移動します。
 +
 image:apim-audeince-menu.png[] 
 .  *Accounts > Listing* ページが表示され、すでに作成されているデフォルトの *Developer*  アカウントが表示されます。
@@ -260,7 +260,7 @@ image:apim-namespace.png[]
 . deployment パネルで、Deployment *globex-mobile* をクリックして、Deployment details ページに移動します。
 +
 image:apim-mobile-deployment-panel.png[]
-. Deployment details ページで *Environment* タブをクリックします。
+. Deployment details ページで *Environment / 環境* タブをクリックします。
 +
 image:apim-mobile-deployment-details.png[]
 .  `replace-me` という値を持つ変数が 2 つあることに注意してください。 3scale がフェッチする必要があるこれらの変数を更新する必要があります。 +
@@ -286,7 +286,7 @@ image:apim-user-key-var.png[]
 ** これを Deployment の環境変数 *USER_KEY* に貼り付けます。
 +
 image:apim-user-key-pasted.png[]
-. globalx-mobile Deployment の環境値は次のようになります。 ページの下部にある *Save*  ボタンをクリックします。
+. globalx-mobile Deployment の環境値は次のようになります。 ページの下部にある *Save / 保存*  ボタンをクリックします。
 +
 image:apim-mobile-env-complete.png[]
 
@@ -301,7 +301,7 @@ image:apim-mobile-browser-view.png[]
 
 == トラフィック分析の表示
 . https://globex-mobile-globex-apim-%USERID%.%SUBDOMAIN%[Globex Mobile^,window=mobile] page を２、３回リフレッシュして、トラフィックを発生させます。
-. Navigate to https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale] に移動し、 *globex-product-catalog-product* をクリックして Product の詳細を表示します。
+. https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale Dashboard^,window=3scale] に移動し、 *Globex Product Catalog* Product をクリックして Product の詳細を表示します。
 . 左側のメニューで *Analytics -> Traffic* リンクをクリックします。  *Hits* の詳細が表示されます。
 . このセクションでは、Product のヒット数やその他のトラフィック分析の詳細に関する洞察も提供します。
 +
