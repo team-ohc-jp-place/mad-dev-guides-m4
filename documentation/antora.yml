@@ -1,5 +1,5 @@
 name: mad-dev-guides-m4
-title: Module 4 - Manage and secure APIs 
+title: Module 4 - APIの管理と保護
 version: main
 nav:
   - modules/ROOT/nav.adoc
