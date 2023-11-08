@@ -1,13 +1,13 @@
 :imagesdir: ../assets/images
-= Red Hat build of Apicurio Registryを用いた成果物の公開、発見、再利用
+= Red Hat build of Apicurio Registryを用いたアーティファクトの公開、ディスカバリ、再利用
 
-https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registry^, window=_blank] は、イベント駆動型および API アーキテクチャ間で標準イベント スキーマと API 設計を共有するためのデータストアです。
+https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registry^, window=_blank] は、イベント駆動型および API アーキテクチャにおいて標準となっているイベント スキーマや API 設計書を共有するためのデータストアです。
 
-== このラボの目標
-* OpenAPI 仕様をサービス レジストリにインポートする
-* コンテンツ ルールを有効にして OpenAPI 形式の有効性を確認する
+== この演習の目標
+* OpenAPI 仕様を Service Registry にインポートする
+* コンテンツ ルールを有効にして OpenAPI フォーマットの妥当性をテストする
 
-== サービスレジストリの起動
+== Service Registry の起動
 
 . https://service-registry-%USERID%.%SUBDOMAIN%/ui/[ここ^, window="service_registry_url"] にアクセスして *Service Registry* を起動します。
 +
