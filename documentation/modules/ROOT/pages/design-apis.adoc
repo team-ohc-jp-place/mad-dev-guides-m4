@@ -4,22 +4,22 @@
 
 = APIの設計
 
-API-First アプローチとして、最初のステップはもちろん API を設計することです。 API デザイナーは、API (OpenAPI、AsyncAPI) とスキーマ (Apache Avro、Google Protobuf、JSON スキーマ) を設計するためのツールです。
+APIファーストのアプローチとして、最初のステップはもちろん API を設計することです。 API Designer は、API (OpenAPI、AsyncAPI) とスキーマ (Apache Avro、Google Protobuf、JSON スキーマ) を設計するためのツールです。
 
-== このラボの目標
+== この演習の目標
 
-このセクションでは、開始点として、既存の API をインポートし、いくつかの小さな編集を加えながらデザイナーを探索します。 次のステップでは、これをサービス レジストリにエクスポートします。
+このセクションでは、まず最初に既存の API をインポートし、いくつかの小さな編集を加えながら API Designer を試してみます。 次のステップでは、これを Service Registry にエクスポートします。
 
 == APIのインポート
 
-OpenAPI ドラフトを API デザイナーにインポートするには、コンテンツをテキストとしてインポートするか、ファイルとしてアップロードします。 このワークショップでは作業をシンプルにするために、ドラフト仕様を API デザイナーに貼り付けてコンテンツをインポートします。
+OpenAPI のドラフトを API Designer にインポートするには、コンテンツをテキストとしてインポートするか、ファイルとしてアップロードします。 このワークショップでは作業をシンプルにするために、ドラフトの仕様を API Designer に貼り付けてコンテンツをインポートします。
 
 [NOTE]
 ====
-実際のシナリオでは、空の API 仕様から始めて、仕様ドキュメントのさまざまな要素を定義するかもわかりません。 その後は、仕様を JSON または YAML 形式で (ソース エディターから内容をコピーして) ローカル ファイル システムにエクスポートし、バージョン管理システムにプッシュします。
+実際のシナリオでは、空の API 仕様から始めて、API ドキュメントのさまざまな要素を定義するかと思われます。 その場合、次に API 仕様を JSON または YAML 形式で (ソース エディターから内容をコピーして) ローカル ファイル システムにエクスポートし、バージョン管理システムにプッシュします。
 ====
 
-. API Designer は OpenShift に事前にデプロイされています。 https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer] をクリックして API デザイナーを起動します。
+. API Designer は OpenShift に事前にデプロイされています。 https://apicurio-designer.%SUBDOMAIN%[API Designer^, window=api_designer] をクリックして API Designer を起動します。
 . *New API* ボタンをクリックします。
 +
 image::api-designer-import-url.png[]
@@ -29,7 +29,7 @@ image::api-designer-import-url.png[]
 image::api-new-api.png[]
 . https://raw.githubusercontent.com/cloud-services-summit-connect-2022/product-catalog-api/main/openapi/openapi-spec.yml[ここ^] をクリックして、OpenAPI のドラフトを表示します。
 . この Web ページからコンテンツ全体をコピーします (Ctrl+A および Ctrl+C)
-. 次に、上記の手順でコピーしたコンテンツ (ドラフト OpenAPI) を API デザイナーの *Source* タブ に貼り付け、既存のコンテンツをすべて置き換えます。 下のスクリーンショットで強調表示されている *Save* ボタンをクリックします。
+. 次に、上記の手順でコピーしたコンテンツ (ドラフト OpenAPI) を API Designer の *Source* タブ に貼り付け、既存のコンテンツをすべて置き換えます。 下のスクリーンショットで強調表示されている *Save* ボタンをクリックします。
 +
 image::api-paste-api.png[]
 . *Design* タブに戻ります。
@@ -40,7 +40,7 @@ image::api-design-tab.png[]
 +
 image::api-designer-api-import-complete.png[]
 
-== API の探索と編集
+== API の確認と編集
 . `Responses` セクションの下の `product-list` をクリックします。
 . `2 example(s) defined` リンクをクリックします。 与えられた例のリストが表示されます
 +
@@ -61,12 +61,12 @@ image::api-designer-sample-edit-complete.png[]
 * OpenAPI 仕様をダウンロードする準備ができました。ページの右上にある *Save As..*  の横にある下矢印をクリックし、 *Save as JSON* を選択します。 ファイルはあなたのコンピュータの *ダウンロード* フォルダに自動的に保存されます。
 +
 image::api-download-as-json.png[]
-* 製品カタログ OpenAPI 仕様を、サービス レジストリで管理する準備ができました。
+* 製品カタログ OpenAPI 仕様を、Service Registry で管理する準備ができました。
 
 
 [NOTE]
 ====
-API Designer では、すべてのデザインをブラウザからローカルに保存します。 ブラウザのキャッシュをクリアしたり、新しいブラウザに切り替えたりすると、データが失われる可能性があります。 デザインをローカルにダウンロードするか、次のステップで説明するように Red Hat Service Registry インスタンスにエクスポートして、作業内容を必ず保存してください。
+API Designer では、すべての　API　ドキュメントをブラウザからローカルに保存します。 ブラウザのキャッシュをクリアしたり、新しいブラウザに切り替えたりすると、データが失われる可能性があります。　API　ドキュメントをローカルにダウンロードするか、次のステップで説明するように Red Hat Service Registry のインスタンスにエクスポートして、作業内容を必ず保存してください。
 ====
 
 
