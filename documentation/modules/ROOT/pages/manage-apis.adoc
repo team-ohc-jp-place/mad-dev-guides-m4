@@ -25,7 +25,7 @@ image:3scale-landing-page.png[]
 
 
 [#3scale-definitions]
-== 3scale でモバイル ゲートウェイ バックエンド、ProductとActiveDoc を作成する
+== 3scale でモバイルアプリケーション用のゲートウェイ バックエンド、プロダクト、ActiveDoc を作成する
 
 3scale でProduct Catalog API を統合して管理するには、API プロダクト と API バックエンドを作成する必要があります。
 
@@ -36,7 +36,7 @@ Note: <<appendix.adoc#3scale-definitions, Backends、Products、ActiveDocs、CRD
 [#create-backend]
 === 3scale でのバックエンドの作成
 
-Product Catalog API 用のゲートウェイに対してバックエンドを作成するには、OpenShift 上ですでに実行されている Product Catalog デプロイメントのサービス URL が必要です。 +
+Product Catalog API のゲートウェイに対してバックエンドを作成するには、OpenShift 上ですでに実行されている Product Catalog デプロイメントのサービス URL が必要です。 +
 
 Note: <<appendix.adoc#openshift-service, OpenShift / Kubernetes Service の詳細とその検索方法>>
 
