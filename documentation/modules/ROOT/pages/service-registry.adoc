@@ -15,7 +15,7 @@ image::sr-landing.png[]
 +
 [NOTE]
 ====
-Red Hat build of Apicurio Registry は、OpenShift *globex-apim-%USERID%* namespace 内にセットアップされています。 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] からデプロイメントにアクセスできます。必要であれば (`%USERID%/openshift`) でログインします。
+Red Hat build of Apicurio Registry は、OpenShift *globex-apim-%USERID%* プロジェクト内にセットアップされています。 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] からデプロイメントにアクセスできます。必要であれば (`%USERID%/openshift`) でログインします。
 ====
 . 上のスクリーンショットに示されているように、 *Upload artifact* ボタンをクリックします。 *Upload Artifact* ウィザードが表示されます。
 +
@@ -25,8 +25,8 @@ image::sr-upload-artifact.png[]
 .. このモジュールの他のセクションでのエラーを避けるために、以下の指示とまったく同じ値を使用してください。
 +
 - *Group*: `globex`
-- *ID of the artifact*: `ProductCatalogAPI`
-- *Artifact textarea*: ボタンをクリックして、前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアにドラッグ アンド ドロップします。
+- *ID*: `ProductCatalogAPI`
+- *Artifact*: Browse ボタンをクリックして前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアにドラッグ アンド ドロップします。
 .. *Upload* ボタンをクリックします。
 +
 image::sr-spec-setting.png[]
