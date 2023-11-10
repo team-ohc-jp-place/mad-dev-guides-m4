@@ -25,37 +25,37 @@ image::sr-upload-artifact.png[]
 .. このモジュールの他のセクションでのエラーを避けるために、以下の指示とまったく同じ値を使用してください。
 +
 - *Group*: `globex`
-- *ID*: `ProductCatalogAPI`
-- *Artifact*: Browse ボタンをクリックして前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアにドラッグ アンド ドロップします。
+- *ID of the artifact*: `ProductCatalogAPI`
+- *Artifact* のテキストエリア: Browse ボタンをクリックして前の手順でダウンロードした製品カタログ OpenAPI をアップロードするか、ファイルをテキストエリアにドラッグ アンド ドロップします。
 .. *Upload* ボタンをクリックします。
 +
 image::sr-spec-setting.png[]
 
-.  *Globex Product Catalog API Gateway* アーティファクトが *Service Registry*  にアップロードされており、Web ページで表示できることに注意してください。
+.  *Globex Product Catalog API Gateway* アーティファクトが *Service Registry*  にアップロードされており、Web ページで表示されていることを確認してください。
 +
 image::sr-uploaded.png[]
 +
 [NOTE]
 ====
-* この OpenAPI スキーマは、 https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^] を通じて他のユーザーと簡単に共有できます。
+* この OpenAPI スキーマは、 https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI スキーマのエンドポイント^] を通じて他のユーザーと簡単に共有できます。
 * このスキーマは、上のスクリーンショットにある *Generate client SDK*  リンクをクリックすることで、クライアント SDK の生成にも使用できます。
 ====
 
 . *Documentation* タブをクリックして、OpenAPI 仕様を表示します。
 .  *Content* タブをクリックして、JSON 形式でスキーマを表示します。
 
-== 形式の有効性確認のためのアーティファクト固有のルールの有効化
+== フォーマットのバリデーションのためのアーティファクト固有のルールの有効化
 . *Overview* タブに戻ります。
 
-. アーティファクトの更新中にスキーマを検証し、互換性を強制するオプションを提供する  *Artifact-specific rules* セクションを確認してください。
+. *Artifact-specific rules* セクションに、アーティファクトが更新される時にスキーマの検証と互換性の保持を有効にするオプションがあることを確認してください。
 +
 image::sr-api-content-rules.png[] 
 
-. *Validity rule* の *Enable* ボタン(上のスクリーンショットで強調表示されている)をクリックし、ドロップダウンから *Full* を選択します。 このルールにより、アーティファクトが更新されたときにコンテンツが有効であることが確認されます。
+. *Validity rule* の *Enable* ボタン(上のスクリーンショットで強調表示されている)をクリックし、ドロップダウンから *Full* を選択します。 このルールにより、アーティファクトが更新された時にコンテンツが有効であることがチェックされます。
 +
 image::sr-content-rules.png[]
 
-. *Content* タブをクリックします。 「Ctrl+A」および「Ctrl+C」を使用して、このタブに表示されているアーティファクトのコンテンツ全体をクリップボードにコピーします。
+. *Content* タブをクリックします。 「Ctrl+A」と「Ctrl+C」を使用して、このタブに表示されているアーティファクトのコンテンツ全体をクリップボードにコピーします。
 +
 image::sr-view-content.png[]
 
@@ -80,11 +80,11 @@ image::sr-error.png[]
 
 [NOTE]
 ====
-実際には、API を使用して Service Registry スキーマの更新を管理する場合、コンテンツ ルールは非常に役立ちます。 詳細については、 https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Product Documentation for Red Hat build of Apicurio Registry^, window=product-page]　をご覧ください。
+実際、 API を使用して Service Registry 内のスキーマの更新を管理する場合に、コンテンツ ルールは非常に役立ちます。 詳細については、 https://access.redhat.com/documentation/en-us/red_hat_build_of_apicurio_registry[Red Hat build of Apicurio Registryの製品ドキュメント^, window=product-page]　をご覧ください。
 ====
 
-この OpenAPI スキーマは、 https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI Schema's endpoint^] を通じて他のユーザーと簡単に共有できることを思い出してください。
+この OpenAPI スキーマは、 https://service-registry-%USERID%.%SUBDOMAIN%/apis/registry/v2/groups/globex/artifacts/ProductCatalogAPI[OpenAPI スキーマのエンドポイント^] を通じて他のユーザーと簡単に共有できることを思い出してください。
 
 
 この手順で使用しているブラウザ タブ以外の他のブラウザ タブはすべて閉じてかまいません。 +
-次のステップでは、ProductCatalogAPI 仕様を使用してモックをセットアップする方法を探索します。
+次のステップでは、ProductCatalogAPI 仕様を使用してモックをセットアップする方法を確認します。
