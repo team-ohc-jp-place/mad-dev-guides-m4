@@ -11,7 +11,7 @@ Microcks や Postman など、API をモックする方法は数多くありま�
 
 == この演習の目標
 * Service Registry から Product Catalog API をインポートする
-* モック サーバーを使用してインポートされた API をテストし、 API Designer でサンプルの 1 つに加えられた変更を探します。
+* モック サーバーを使用してインポートされた API をテストし、 API Designer でサンプルの 1 つに加えた変更を確認する
 
 
 == Product Catalog APIのインポート
