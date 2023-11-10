@@ -2,15 +2,15 @@
 
 = 並行開発を支援するためのモックのセットアップ
 
-OpenAPI 仕様が完成したので、API モックの作成により、並列開発ストリームが可能になり、迅速な内部ループ開発が可能になります。
+OpenAPI 仕様が完成したので、API のモックを作成することで並行開発が可能になり、迅速な開発のインナーループを実現できます。
 
 * さまざまな開発チーム (モバイル開発など) は、API が完全に開発されるまで待つ必要はなく、代わりにこれらのモックを使用して現実的な応答を得ることができます。
-* バックエンド開発者は、 https://quarkus.io/[Quarkus^, window=product-page] などの最新のクラウドネイティブ フレームワークを使用してバックエンド アプリケーション API を並行して構築します。
+* バックエンド開発者は、 https://quarkus.io/[Quarkus^, window=product-page] などの最新のクラウドネイティブ フレームワークを使用してバックエンド アプリケーション API の開発を並行して行います。
 
-microcks、postman など、API をモックする方法は数多くあります。このモジュールでは、OpenShift にデプロイされている Microcks を使用します。
+Microcks や Postman など、API をモックする方法は数多くあります。このモジュールでは、OpenShift にデプロイされている Microcks を使用します。
 
-== このラボの目標
-* サービス レジストリから Product Catalog API をインポートする
+== この演習の目標
+* Service Registry から Product Catalog API をインポートする
 * モック サーバーを使用してインポートされた API をテストし、 API Designer でサンプルの 1 つに加えられた変更を探します。
 
 
@@ -21,11 +21,11 @@ microcks、postman など、API をモックする方法は数多くあります
 Microcks は、OpenShift のglobex-apim-%USERID% namespace に開発モードでセットアップされています。
 
 
-. https://microcks-globex-apim-%USERID%.%SUBDOMAIN%/[microcks^] に接続
+. https://microcks-globex-apim-%USERID%.%SUBDOMAIN%/[microcks^] にアクセス
 +
 [NOTE]
 ====
-Microcks は、このワークショップのみを目的として、認証なしで開発者モードでセットアップされています。  link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] からデプロイメントにアクセスできます。必要に応じてユーザー名/パスワードを使用してログインします。 (`%USERID%/openshift`)
+ここでは、Microcks はこのワークショップのみを目的としており、開発者モードでセットアップされているため認証は不要となっています。  link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[OpenShift Console^,role=external,window=console] からデプロイメントにアクセスできます。必要に応じてユーザー名/パスワードを使用してログインします。 (`%USERID%/openshift`)
 ====
 . 以下のスクリーンショットに示すように、 *Importers* ボタンをクリックします。
 +
@@ -53,14 +53,14 @@ image:mic-create-job.png[]
 +
 [NOTE]
 ====
-指定するリポジトリ URL は、前の手順で設定した Service Registory からの OpenAPI Schema の URL です。
+指定するリポジトリ URL は、前の手順で設定した Service Registory からの OpenAPI スキーマの URL です。
 ====
 . 提供すべき認証シークレットがないため、 *Step 2 - Authentication options* はそのまま *Next >* をクリックします。
 +
 image:mic-create-job-step2.png[] 
-. *Step 3 - Labels* *Labels* ステップでラベルを指定することを選択できます。 ただし、これは必須ではなく、この演習に関連するものでもないため、 *Step 3 - Labels* も *Next >* をクリックするだけで済みます。
+. *Labels* のステップではラベルを指定することも可能です。 ただし、これは必須ではなく、この演習に関連するものでもないため、 *Step 3 - Labels* もそのまま *Next >* をクリックして構いません。
 image:mic-create-job-step3.png[] 
-. ウィザードの  *Create* in the *Step 4 - Review* ステップで *Create* をクリックします。
+. ウィザードの *Step 4 - Review* ステップで *Create* をクリックします。
 image:mic-create-job-step4.png[] 
 . 以下に示すように、インポートした Product Catalog API がリストされていることを確認できます。 強調表示されているラベルに特に注意してください。  *Error* ラベルが表示された場合は、以下の Caution を参照してください。
 +
@@ -95,5 +95,5 @@ image:mic-final-mock.png[]
 . API に依存する開発チームは、モック サーバーのこれらのモック エンド ポイントを使用して、バックエンド サービスが完全に開発されるのを待たずに並行して開発を続けることができるため、市場投入までの時間を短縮できます。
 
 
-表示しているこの手順ブラウザ タブ以外の他のブラウザ タブをすべて閉じて、先に進みます。 +
+表示されているこの手順のブラウザ タブ以外の他のブラウザ タブをすべて閉じて、先に進みます。 +
 次のステップでは、Red Hat 3scale API Management を使用して API を保護する方法を学習します。
