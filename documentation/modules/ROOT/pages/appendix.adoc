@@ -27,7 +27,7 @@ OpenShift では、Kubernetes Service が内部ロード バランサーとし�
 * ブラウザウィンドウで、 link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-%USERID%?view=graph[Topology view^,role=external,window=_blank] からラボの OpenShift クラスターのコンソールに移動します。
 
 
-* ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-%USERID%* namespace で *Developer* パースペクティブを開きます。
+* ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。 *globex-%USERID%* プロジェクトで *Developer (開発者)* パースペクティブを開きます。
 * `*catalog*` のアイコンをクリックすると、右側に deployment の詳細が表示されます。 下のスクリーンショットに示されているように、 *Resources* タブで *catalog* サービスをクリックします。
 +
 image::apim-catalog-service.png[]
