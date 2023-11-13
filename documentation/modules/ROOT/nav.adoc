@@ -1,6 +1,6 @@
 * xref:introduction.adoc[はじめに]
 * xref:design-apis.adoc[APIの設計]
-* xref:service-registry.adoc[APIの統治]
+* xref:service-registry.adoc[APIのガバナンス]
 * xref:mock-apis.adoc[APIのモック]
 * xref:manage-apis.adoc[APIの管理と保護]
 * xref:appendix.adoc[付録: もっと詳しく知る]
