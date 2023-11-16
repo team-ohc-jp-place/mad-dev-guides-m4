@@ -19,7 +19,7 @@
 . ユーザー名とパスワード (`%USERID%/openshift`) を使用してログインします。
 +
 image:3scale-login.png[] 
-. サンプル API がセットアップ済みとなっています。 ここではこれは使用するのではなく、これまでにこのワークショップで取り組んできた *Product Catalog API*  用に新しいものを作成します。
+. サンプル API がセットアップ済みとなっています。 ここではこれを使用せず、これまでにこのワークショップで取り組んできた *Product Catalog API*  用に新しいものを作成します。
 +
 image:3scale-landing-page.png[]
 
