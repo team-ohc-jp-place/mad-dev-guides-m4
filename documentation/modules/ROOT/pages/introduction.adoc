@@ -42,7 +42,7 @@ image::globex-deployment-apim.png[]
 
 このモジュールでは、OpenShift 内にデプロイされた 2 つの namespace を使用します。
 
-* OpenShift クラスターのラボのコンソールにアクセスするには次のリンクを使用してください:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole].
+* OpenShift クラスターのラボのコンソールにアクセスするには link:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole] を使用してください。
 
 OpenShift クラスタにログインしたことがない場合は、次の認証情報を使用してください。OpenShiftはすでに https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^] と統合されています。
 
