@@ -42,10 +42,22 @@ image::globex-deployment-apim.png[]
 
 このモジュールでは、OpenShift 内にデプロイされた 2 つの namespace を使用します。
 
-. ブラウザウィンドウで、OpenShift クラスターのlink:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole] に移動します。ユーザー名/パスワード (`%USERID%/openshift`) を使用してログインします。 *Developer (開発者)* パースペクティブで、 *globex-apim-%USERID%* プロジェクト (namespace) を開きます。
-. *globex-apim-%USERID%* プロジェクトには、API の設計、管理、管理に必要なデプロイメントが含まれています。
+* OpenShift クラスターのラボのコンソールにアクセスするには次のリンクを使用してください:https://console-openshift-console.%SUBDOMAIN%/topology/ns/globex-apim-%USERID%?view=graph[console^,role=external,window=openshiftconsole].
+
+OpenShift クラスタにログインしたことがない場合は、次の認証情報を使用してください。OpenShiftはすでに https://access.redhat.com/products/red-hat-single-sign-on/[Red Hat Single Sign On^] と統合されています。
+
+image::sso_login.png[openshift_login]
+
+* あなたのログイン情報は以下の通りです:
+
+** Username: `%USERID%`
+** Password: `{openshift-password}`
+
+
+. *Developer* パースペクティブで *globex-apim-%USERID%* namespace を開いてください。
+. *globex-apim-%USERID%* namespace には、APIの設計、管理、運用に必要な機能が含まれています。
 +
 image:apim-namespace.png[]
-. *globex-%USERID%* プロジェクトには、Globex によってデプロイされたバックエンド サービスが含まれています。 *Developer* パースペクティブから、ドロップダウンを使用して *globex-%USERID%* プロジェクトに切り替えます。
+. *globex-%USERID%* namespaceには、Globex によってデプロイされたバックエンド サービスが含まれています。 *Developer* パースペクティブから、ドロップダウンを使用して *globex-%USERID%* namespace に切り替えます。
 +
 image:globex-namespace.png[]
