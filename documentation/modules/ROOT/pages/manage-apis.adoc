@@ -76,7 +76,7 @@ spec:
 +
 image:apim-create-backend-cr.png[] 
 +
-.. *Create / 作成済み* をクリックして 3scale バックエンド リソースを作成します。 3scale オペレーターは、3scale テナントにバックエンド リソースを作成します。
+.. *Create / 作成* をクリックして 3scale バックエンド リソースを作成します。 3scale オペレーターは、3scale テナントにバックエンド リソースを作成します。
 .. *Backend details* ページが表示されます。 ページ下部の　*Conditions / 条件* セクションで、タイプ  *Synced* が設定され、ステータスが *True* であることに注意してください。
 +
 image:apim-create-backend-details.png[] 
@@ -144,7 +144,7 @@ spec:
 ----
 +
 image:apim-prod-activedoc-cr.png[] 
-.. *Create / 作成済み* をクリックして 3scale リソースを作成すると、3scale オペレーターがこれらのリソースを 3scale テナントに作成します。
+.. *Create / 作成* をクリックして 3scale リソースを作成すると、3scale オペレーターがこれらのリソースを 3scale テナントに作成します。
 +
 image:apim-prod-activedoc-created.png[]
 . https://3scale-%USERID%-admin.%SUBDOMAIN%[3scale^,window=3scale] をクリックして、作成されたプロダクトを表示します。
