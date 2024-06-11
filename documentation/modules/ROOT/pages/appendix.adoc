@@ -5,7 +5,6 @@
 [#3scale-definitions]
 === What are Backend, Product, ActiveDocs and CRDs?
 
-
 * *Backends* are Internal APIs which are then bundled into a 3scale Product. It contains at least the URL of the API. It can optionally be configured with mapping rules, methods and metrics to facilitate reusability.
 * *Products* are the Customer-facing APIs. It defines the application plans, and configure APIcast
 * *ActiveDocs* are interactive documentation for your API offered as a framework by 3scale. You can create API documentation by attaching the Product Catalog OpenAPI schema as a *3scale ActiveDoc*
